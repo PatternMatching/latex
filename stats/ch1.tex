@@ -1,0 +1,176 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{MnSymbol}
+\usepackage{algorithm,algpseudocode}
+\usepackage{parskip}
+\usepackage{tikz}
+\usetikzlibrary{fit,positioning}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\textheight}{9in}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{-0.5in}
+\setlength\parindent{0pt}
+
+% Sample macros -- how you define new commands
+% My own set of frequently-used macros have grown to many hundreds of lines.
+% Here are some simple samples.
+
+\newcommand{\Adv}{{\mathbf{Adv}}}       
+\newcommand{\prp}{{\mathrm{prp}}}                  % How to define new commands 
+\newcommand{\calK}{{\cal K}}
+\newcommand{\outputs}{{\Rightarrow}}                
+\newcommand{\getsr}{{\:\stackrel{{\scriptscriptstyle\hspace{0.2em}\$}}{\leftarrow}\:}}
+\newcommand{\andthen}{{\::\;\;}}    % \, \: \; for thinspace, medspace, thickspace
+\newcommand{\Rand}[1]{{\mathrm{Rand}[{#1}]}}       % A command with one argument
+\newcommand{\Perm}[1]{{\mathrm{Perm}[{#1}]}}       
+\newcommand{\Randd}[2]{{\mathrm{Rand}[{#1},{#2}]}} % and with two arguments
+\newcommand{\E}[1]{{\mathrm{E}\left[{#1}\right]}}
+\newcommand{\Cov}[2]{{\mathrm{Cov}[{#1},{#2}]}}
+\newcommand{\Var}[1]{{\mathrm{Var}[{#1}]}}
+\newcommand{\tab}[1]{\hspace{.2\textwidth}\rlap{#1}}
+\newcommand{\itab}[1]{\hspace{0em}\rlap{#1}}
+
+\newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{\bf Problem Set 1 Solutions\\[2ex] 
+       \rm\normalsize EN605.725 --- Fall 2014}
+\date{\today}
+\author{\bf Peter Hennings}
+
+\begin{document}
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Problem 1.1} 
+
+\begin{enumerate}[(a)]
+    \item This sample space is finite (countable).  Denoting 'H' for heads and 'T' for tails, for $S$ we have permutations of a sequence of length four:
+        \begin{align*}
+            &\text{\{HHHH\}, \{HHHT\}, \{HHTH\}, \{HHTT\}, \{HTHH\}, \{HTHT\}} \\
+            &\text{\{HTTH\}, \{HTTT\}, \{THHH\}, \{THHT\}, \{THTH\}, \{THTT\}} \\
+            &\text{\{TTHH\}, \{TTHT\}, \{TTTH\}, \{TTTT\}}
+        \end{align*}
+    \item Obviously, a plant can have only countable leaves and therefore the sample space is itself countable and would be represented by 0 or some positive integer.
+    \item If we operate under the assumption that all light bulbs will eventually fail, then we must have a sample space similar to the plant leaves (e.g. countable and representable by 0 or some positive integer).
+    \item Weights have a continuous range and thusly are uncountable.  Specifically, the weights would be on the interval $(0, \infty)$.
+    \item We will operate under the assumption that the number of electronic components in a shipment is finite.  There can be only a countable set of proportions corresponding to the result and these would fall (discretely) within the range $[0,1]$.
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Problem 1.2}
+
+\begin{enumerate}[(a)]
+    \item 
+    \item We would like to verify the following identity:
+        \begin{align*}
+            B &= (B \cap A) \cup (B \cap A^{\complement})
+        \end{align*}
+        
+        Using the distributive and associative properties of set theory, we can pull out $B$ and thusly, you have:
+        \begin{align*}
+            &B \cap (A \cup A^{\complement})
+        \end{align*}
+        
+        We note that $A \cap A^{\complement} = S$, where $S$ is the sample space.  As such we have:
+        \begin{align*}
+            B \cap S = B
+        \end{align*}
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Problem 1.4}
+
+\begin{enumerate}[(a)]
+    \item $P(A \cup B) = P(A) + P(B) - P(A \cap B)$
+    \item $P((A \cup B) \setminus (A \cap B)) = P((A \cap B^{\complement}) \cup (B \cap A^{\complement}))$.  Because in the latter expression we have the union of mututally exclusive (disjoint) events, we can convert to addition:
+        \begin{align*}
+            P((A \cap B^{\complement}) \cup (B \cap A^{\complement})) &= P(A \cap B^{\complement}) + P(B \cap A^{\complement}) \\
+            &= P(A) - P(A \cap B) + P(B) - P(A \cap B) \\
+            &= P(A) + P(B) - 2 P(A \cap B)
+        \end{align*}
+    \item See (a).
+    \item $(A \cap B)^{\complement} = 1 - P(A \cap B)$
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Problem 1.5}
+
+\begin{enumerate}[(a)]
+    \item A U.S. birth results in identical female twins
+    \item $P(A \cap B \cap C) = \frac{1}{90} \cdot \frac{1}{3} \cdot \frac{1}{2} = 0.2\%$
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Problem 1.7}
+
+\begin{enumerate}[(a)]
+    \item The probability function for scoring in this scenario would be the following:
+        \begin{align*}
+            P(0) &= \frac{A - \pi r^2}{A} \\
+            P(1) &= \frac{\pi r^2 - \pi (4r/5)^2}{A} \\
+            P(2) &= \frac{\pi (4r/5)^2 - \pi (3r/5)^2}{A} \\
+            P(3) &= \frac{\pi (3r/5)^2 - \pi (2r/5)^2}{A} \\
+            P(4) &= \frac{\pi (2r/5)^2 - \pi (r/5)^2}{A} \\
+            P(5) &= \frac{\pi (r/5)^2}{A}
+        \end{align*}
+    \item If we denote as $A$ the event 'scoring $i$ points' and $B$ as the event that the dart hits the board, we can utilize Bayes Law to show the following:
+        \begin{align*}
+            P(A \, | \, B) &= \frac{P(A \cap B)}{P(B)}
+        \end{align*}
+        
+        We also note that the probability that $i$ points are scored and the board is hit is the following:
+        
+        \begin{align*}
+            P(A \cap B) &= \frac{\pi r^2}{A} \frac{(6-i)^2 - (5-i)^2}{5^2}
+        \end{align*}
+        
+        The probability that the board is hit is just $\frac{\pi r^2}{A}$ and so we have the same probability function (e.g. distribution) that we saw in example 1.2.7:
+        
+        \begin{align*}
+            P(A \, | \, B) &= \frac{(6-i)^2 - (5-i)^2}{5^2}
+        \end{align*}
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Problem 1.11}
+
+\begin{enumerate}[(a)]
+    \item We have the collection (of sets) $\mathcal{B} = \{\emptyset, S\}$ where $S$ denotes the sample space.  To show that this collection is a $\sigma$-algebra, we note that it is nonempty and proceed to show closure under complement and under countable union:
+        \begin{align*}
+            S^{\complement} &= \emptyset \in \mathcal{B} \\
+            \emptyset^{\complement} &= S \in \mathcal{B} \\
+            S \cup \emptyset &= S \in \mathcal{B}
+        \end{align*}
+    \item As we have all subsets of $S$, including $S$, we have closure under complement and countable union and thusly, $\mathcal{B}$ is a sigma-algebra.
+    \item Since $\mathcal{B}_1, \mathcal{B}_2$ are $\sigma$-algebras, $\emptyset \in \mathcal{B}_1, \mathcal{B}_2, \mathcal{B}_1 \cap \mathcal{B}_2$.  Also, if $A \in \mathcal{B}_1 \cap \mathcal{B}_2$.  Since $\mathcal{B}_1, \mathcal{B}_2$ are $\sigma$-algebras, we have $A^{\complement} \in \mathcal{B}_1, \mathcal{B}_2$.  Similarly, if $\bigcup_i^n A_i \in \mathcal{B}_1, \mathcal{B}_2$ then we have $\bigcup_i^n A_i \in \mathcal{B}_1 \cap \mathcal{B}_2$.
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Problem 1.14}
+
+If a sample space has $n$ elements, then the collection of subsets can be represented by a binary sequence of length $n$, where a 1 denotes inclusion in the subset and 0 denotes exclusion.  The number of unique binary numbers that can be represented by this sequence is $2^n$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Problem 1.24}
+
+\begin{enumerate}[(a)]
+    \item 
+    \item 
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Practice Problem 1.1}
+
+We would like to prove Bonferroni's Inequality, which is the following:
+
+\begin{align*}
+    P(A \cap B) &\ge P(A) + P(B) - 1
+\end{align*}
+
+\end{document}

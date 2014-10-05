@@ -1,0 +1,86 @@
+\documentclass[11pt,a4paper]{report}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,epsfig,epstopdf,titling,url,array}
+\usepackage{parskip}
+
+\makeatletter
+\def\thm@space@setup{%
+  \thm@preskip=\parskip \thm@postskip=0pt
+}
+\makeatother
+
+\title{\bf Notes\\[2ex] 
+       \rm\normalsize EN605.725 --- Fall 2014}
+\date{\today}
+\author{\bf Peter Hennings}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[section]
+
+\theoremstyle{theorem}
+\newtheorem{thm}{Theorem}[section]
+
+\begin{document}
+\maketitle
+
+\chapter{Probability Theory}
+
+\section{Set Theory}
+
+Statistics builds on the foundation of probability theory.  Similarly, probability theory in turn builds upon set theory.
+
+A main objective of a statistician is to draw conclusions about a population of objects having conducted an experiment.  The first step in this process is identifying the possible outcomes of said experiment.
+
+\begin{defn}
+The set, $S$, of all possible outcomes of a particular experiment is called the \textit{sample space} for the experiment.
+\end{defn}
+
+We can classify sample spaces into two types: countable or uncountable.  If the elements of a sample space can be put into a 1-1 correspondence with a subset of the integers, then the sample space is countable.  Otherwise, it is uncountable.
+
+\begin{defn}
+An \textit{event} is any collection of possible outcomes of an experiment, that is, any subset of $S$ (including $S$ itself).
+\end{defn}
+
+Let $A$ be an event, a subset of $S$.  We say that the event $A$ occurs if the outcome of the experiment is the set $A$.  When speaking of probabilities, we generally speak of the probability of an event, rather than a set.  But we may use the terms interchangeably.
+
+We define formally the following two relationships, which allow us to order and equate sets:
+
+\begin{align*}
+    & A \subset B \Leftrightarrow x \in A \Rightarrow x \in B & \textrm{(containment)} \\
+    & A = B \Leftrightarrow A \subset B \textrm{ and } B \subset A & \textrm{(equality)}
+\end{align*}
+
+Given any two events (sets) $A$ and $B$, we have the following elementary set operations:
+
+\textbf{Union}: The union of $A$ and $B$, written $A \cup B$, is the set of elements that belong to either $A$ or $B$ or both:
+
+\begin{align*}
+    & A \cup B = \{x:x \in A \textrm{ or } x \in B\}
+\end{align*}
+
+\textbf{Intersection}: The intersection of $A$ and $B$, written $A \cap B$, is the set of elements that belong to both $A$ and $B$:
+
+\begin{align*}
+    & A \cap B = \{x:x \in A \textrm{ and } x \in B\}
+\end{align*}
+
+\textbf{Complementation}: The complement of $A$, written $A^{\complement}$, is the set of all elements that are not in A:
+
+\begin{align*}
+    & A^{\complement} = \{x:x \notin A\}
+\end{align*}
+
+\begin{thm}
+For any three events, A, B, and C, defined on a sample space S,
+\begin{align*}
+    & A \cup B = B \cup A & \textrm{(commutativity)} \\
+    & A \cap B = B \cap A \\
+    & A \cup (B \cup C) = (A \cup B) \cup C & \textrm{(associativity)} \\
+    & A \cap (B \cap C) = (A \cap B) \cap C \\
+    & A \cap (B \cup C) = (A \cap B) \cup (A \cap C) & \textrm{(distributive laws)} \\
+    & A \cup (B \cap C) = (A \cup B) \cap (A \cup C) \\
+    & (A \cup B)^{\complement} = A^{\complement} \cap B^{\complement} & \textrm{(DeMorgan's Laws)} \\
+    & (A \cap B)^{\complement} = A^{\complement} \cup B^{\complement}
+\end{align*}
+\end{thm}
+
+\end{document}

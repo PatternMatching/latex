@@ -1,0 +1,126 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{MnSymbol}
+\usepackage{algorithm,algpseudocode}
+\usepackage{parskip}
+\usepackage{tikz}
+\usetikzlibrary{fit,positioning}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\textheight}{9in}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{-0.5in}
+\setlength\parindent{0pt}
+
+% Sample macros -- how you define new commands
+% My own set of frequently-used macros have grown to many hundreds of lines.
+% Here are some simple samples.
+
+\newcommand{\Adv}{{\mathbf{Adv}}}       
+\newcommand{\prp}{{\mathrm{prp}}}                  % How to define new commands 
+\newcommand{\calK}{{\cal K}}
+\newcommand{\outputs}{{\Rightarrow}}                
+\newcommand{\getsr}{{\:\stackrel{{\scriptscriptstyle\hspace{0.2em}\$}}{\leftarrow}\:}}
+\newcommand{\andthen}{{\::\;\;}}    % \, \: \; for thinspace, medspace, thickspace
+\newcommand{\Rand}[1]{{\mathrm{Rand}[{#1}]}}       % A command with one argument
+\newcommand{\Perm}[1]{{\mathrm{Perm}[{#1}]}}       
+\newcommand{\Randd}[2]{{\mathrm{Rand}[{#1},{#2}]}} % and with two arguments
+\newcommand{\E}[1]{{\mathrm{E}\left[{#1}\right]}}
+\newcommand{\Cov}[2]{{\mathrm{Cov}[{#1},{#2}]}}
+\newcommand{\Var}[1]{{\mathrm{Var}[{#1}]}}
+\newcommand{\tab}[1]{\hspace{.2\textwidth}\rlap{#1}}
+\newcommand{\itab}[1]{\hspace{0em}\rlap{#1}}
+
+\newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{\bf Chapter 2 Recommended Problem Solutions\\[2ex] 
+       \rm\normalsize EN605.725 --- Fall 2014}
+\date{\today}
+\author{\bf Peter Hennings}
+
+\begin{document}
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Problem 2.1 (c)} 
+
+For the below, we would like to find the PDF of $Y$ and show that it integrates to 1:
+
+\begin{enumerate}[(a)]
+    \item 
+    \item 
+    \item 
+        \begin{align*}
+            Y &= X^2, f_X(x) = 30x^2(1 - x)^2, 0 < x < 1 \\
+            g^{-1}(y) &= \sqrt{y}, \frac{d g^{-1}(y)}{dy} = \frac{1}{2 \sqrt{y}} \\
+            f_Y(y) &= f_X(g^{-1}(y)) \frac{d g^{-1}(y)}{dy} \\
+            &= \frac{30y(1 - \sqrt{y})^2}{2 \sqrt{y}}, 0 < y < 1 \\
+            &= 15 \sqrt{y} (\sqrt{y}-1)^2 \\
+            \int_0^1 15 \sqrt{y} (-\sqrt{y}+1)^2 &= 6 y^{\frac{5}{2}} + 10 y^{\frac{3}{2}} - 15 y^{2} \big]_0^1 = 1
+        \end{align*}
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Problem 2.2 (c)}
+
+\begin{enumerate}[(a)]
+    \item 
+    \item 
+    \item We have $Y = e^X$ and $f_X(x) = \frac{1}{\sigma^2} x e^{-(x/\sigma)^2/2}$.  We also have that $0 < x < \infty$ and $\sigma^2 > 0$.  Therefore:
+        \begin{align*}
+            g^{-1}(y) &= \ln{y} \\
+            \frac{d g^{-1}(y)}{dy} &= \frac{1}{y} \\
+            f_Y(y) &= f_X(g^{-1}(y)) \frac{d g^{-1}(y)}{dy} \\
+            &= \frac{\ln{y}}{y \sigma^2} e^{-(\ln{y}/\sigma)^2/2}
+        \end{align*}
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Problem 2.4}
+
+\begin{enumerate}[(a)]
+    \item To verify that $f_X$ is a pdf, we use Theorem 1.6.5, which states that to be a pdf, $f_X$ must satisfy $f_X(x) \ge 0$ and either $\sum_x f_X(x) = 1$ or $\int_{-\infty}^{\infty} f_X(x) dx = 1$.  For the (positive) function specified, we have:
+        \begin{align*}
+            \int_{-\infty}^{\infty} f_X(x) &= \int_{-\infty}^{0} f_X(x) + \int_{0}^{\infty} f_X(x)
+        \end{align*}
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Problem 2.6 (b)}
+
+\begin{enumerate}[(a)]
+    \item $Y = |X|^3, f_X = \frac{1}{2} e^{-|x|}$
+    \item 
+        \begin{align*}
+            Y &= g(x) = 1 - X^2 \\ 
+            f_X &= \frac{3}{8}(x+1)^2, -1 < x < 1 \\
+        \end{align*}
+        
+        Since $g(x)$ is not monotone, we need to apply Theorem 2.1.8 and so we partition the domain of $f_X$ into $a_0 = \{ 0 \}, a_1 = (-1, 0), a_2 = (0, 1)$. $g_1(x) = 1 - x^2$ on $a_1$ and $g_2(x) = 1 - x^2$ on $a_2$.
+        
+        \begin{align*}
+            g_1^{-1}(y) &= -\sqrt{1 - y}, g_2^{-1}(y) = \sqrt{1 - y} \\
+            \frac{dg_1^{-1}(y)}{dy} &= \frac{dg_2^{-1}(y)}{dy} = - \frac{1}{2 \sqrt{1 - y}} \\
+            f_Y &= f_X(g_1^{-1}(y)) \left| \frac{dg_1^{-1}(y)}{dy} \right| + f_X(g_2^{-1}(y)) \left| \frac{dg_2^{-1}(y)}{dy} \right| \\
+            &= \frac{3}{8}(1 - \sqrt{1 - y})^2 \frac{1}{2 \sqrt{1 - y}} + \frac{3}{8}(1 + \sqrt{1 - y})^2 \frac{1}{2 \sqrt{1 - y}}
+        \end{align*}
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Problem 2.7}
+
+Let $X$ have pdf $f_X(x) = \frac{2}{9} (x + 1), -1 \le x \le 2$.
+
+\begin{enumerate}[(a)]
+    \item If we have $Y = X^2$, we would like to find the pdf of $Y$.  The logical parition of the domain for application of theorem 2.1.8 would be $a_0 = \{0\}, a_1 = [-1, 0), a_2 = (0, 2]$.  However, we see that the set of points resulting from each application of $g(x)$ is not equivalent across all the partitions and therefore, Theorem 2.1.8 does not apply here.  Instead, we can use the definition of the cdf:
+        \begin{align*}
+            P(Y \le y) &= P(X^2 \le y)
+        \end{align*}
+\end{enumerate}
+
+\end{document}
