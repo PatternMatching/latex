@@ -1,5 +1,6 @@
 \documentclass[11pt,a4paper]{report}
 \usepackage{amsmath,amsfonts,amssymb,amsthm,epsfig,epstopdf,titling,url,array}
+\usepackage{enumerate}
 \usepackage{parskip}
 
 \makeatletter
@@ -26,30 +27,44 @@
 
 \section{Set Theory}
 
-Statistics builds on the foundation of probability theory.  Similarly, probability theory in turn builds upon set theory.
+Statistics builds on the foundation of probability theory.  Similarly,
+probability theory in turn builds upon set theory.
 
-A main objective of a statistician is to draw conclusions about a population of objects having conducted an experiment.  The first step in this process is identifying the possible outcomes of said experiment.
-
-\begin{defn}
-The set, $S$, of all possible outcomes of a particular experiment is called the \textit{sample space} for the experiment.
-\end{defn}
-
-We can classify sample spaces into two types: countable or uncountable.  If the elements of a sample space can be put into a 1-1 correspondence with a subset of the integers, then the sample space is countable.  Otherwise, it is uncountable.
+A main objective of a statistician is to draw conclusions about a
+population of objects having conducted an experiment.  The first step
+in this process is identifying the possible outcomes of said
+experiment.
 
 \begin{defn}
-An \textit{event} is any collection of possible outcomes of an experiment, that is, any subset of $S$ (including $S$ itself).
+  The set, $S$, of all possible outcomes of a particular experiment is
+  called the \textit{sample space} for the experiment.
 \end{defn}
 
-Let $A$ be an event, a subset of $S$.  We say that the event $A$ occurs if the outcome of the experiment is the set $A$.  When speaking of probabilities, we generally speak of the probability of an event, rather than a set.  But we may use the terms interchangeably.
+We can classify sample spaces into two types: countable or
+uncountable.  If the elements of a sample space can be put into a 1-1
+correspondence with a subset of the integers, then the sample space is
+countable.  Otherwise, it is uncountable.
 
-We define formally the following two relationships, which allow us to order and equate sets:
+\begin{defn}
+  An \textit{event} is any collection of possible outcomes of an
+  experiment, that is, any subset of $S$ (including $S$ itself).
+\end{defn}
+
+Let $A$ be an event, a subset of $S$.  We say that the event $A$
+occurs if the outcome of the experiment is the set $A$.  When speaking
+of probabilities, we generally speak of the probability of an event,
+rather than a set.  But we may use the terms interchangeably.
+
+We define formally the following two relationships, which allow us to
+order and equate sets:
 
 \begin{align*}
     & A \subset B \Leftrightarrow x \in A \Rightarrow x \in B & \textrm{(containment)} \\
     & A = B \Leftrightarrow A \subset B \textrm{ and } B \subset A & \textrm{(equality)}
 \end{align*}
 
-Given any two events (sets) $A$ and $B$, we have the following elementary set operations:
+Given any two events (sets) $A$ and $B$, we have the following
+elementary set operations:
 
 \textbf{Union}: The union of $A$ and $B$, written $A \cup B$, is the set of elements that belong to either $A$ or $B$ or both:
 
@@ -81,6 +96,164 @@ For any three events, A, B, and C, defined on a sample space S,
     & (A \cup B)^{\complement} = A^{\complement} \cap B^{\complement} & \textrm{(DeMorgan's Laws)} \\
     & (A \cap B)^{\complement} = A^{\complement} \cup B^{\complement}
 \end{align*}
+\end{thm}
+
+\begin{defn}
+  Two events $A$ and $B$ are disjoint (or mutually exclusive) if $A
+  \cap B = \emptyset$.  The events $A_1, A_2, \dots$ are pairwise
+  disjoint (or mutually exclusive) if $A_i \cap A_j = \emptyset$ for
+  all $i \not = j$.
+\end{defn}
+
+Disjoint sets are sets with no points in common.  If we draw a Venn
+diagram for two disjoint sets, the sets do not overlap.
+
+\begin{defn}
+  If $A_1, A_2, \dots$ are pairwise disjoint and $\cup_{i=0}^{\infty}
+  A_i = S$, then the collection $A_1, A_2, \dots$ forms a partition of
+  $S$.
+\end{defn}
+
+Partitions are very useful, allowing us to divide the sample space
+into small, nonoverlapping pieces.
+
+\section{Basics of Probability Theory}
+
+The realization of an experiment is an outcome in the sample space.
+If the experiment is performed a number of times, different outcomes
+may occur each time or some outcomes may repeat.  Frequency of
+occurrence is effectively probability.  More probable outcomes occur
+more frequently.
+
+\begin{defn}
+A collection of subsets of $S$ is called a sigma algebra (or Borel
+field), denoted by $\mathcal{B}$, if it satisfies the following three
+properties:
+
+\begin{enumerate}[(a)]
+  \item $\emptyset \in \mathcal{B}$ (the empty set is an element of
+    $\mathcal{B}$)
+  \item If $A \in \mathcal{B}$ then $A^{\complement} \in \mathcal{B}$
+    ($\mathcal{B}$ is closed under complementation)
+  \item If $A_1, A_2, \dots \in \mathcal{B}$, then
+    $\cup_{i=1}^{\infty} A_i \in \mathcal{B}$
+\end{enumerate}
+
+\end{defn}
+
+The empty set $\emptyset$ is a subset of any set.  Thus, $\emptyset
+\subset S$.  A sigma algebra always contains this subset.  Since $S =
+\emptyset^{\complement}$, properties (a) and (b) imply that $S$ is
+always in $\mathcal{B}$.  $\mathcal{B}$ is closed under countable
+intersection from DeMorgan's laws.
+
+Many different sigma algebras can be associated with a sample space
+$S$.  For example, the collection of the two sets $\{\emptyset, S\}$
+is usually called the trivial sigma algebra.  The only sigma algebra
+we will be concerned with is the smallest one that contains all of the
+open sets in a given sample space $S$.
+
+If $S$ is finite or countable, then these technicalities do not arise,
+for we define for a given sample space $S$,
+
+\begin{align*}
+  & \mathcal{B} = \{ \textrm{all subsets of S, including S itself} \}
+\end{align*}
+
+If $S$ has $n$ elements, there are $2^n$ sets in $\mathcal{B}$.  In
+general, if $S$ is uncountable, it is not an easy task to describe
+$\mathcal{B}$.  However, $\mathcal{B}$ is chosen to contain any set of
+interest.
+
+\begin{defn}
+Given a sample space $S$ and an associated sigma algebra
+$\mathcal{B}$, a probability function is a function $P$ with domain
+$\mathcal{B}$ that satisfies:
+
+\begin{enumerate}
+ \item $P(A) \ge 0$ for all $A \in B$
+ 
+ \item $P(S) = 1$
+
+ \item If $A_1, A_2, \dots \in \mathcal{B}$ are pairwise disjoint,
+   then $P\left( \cup_{i=1}^{\infty} A_i \right) = \sum_{i=1}^{\infty} P(A_i)$.
+\end{enumerate}
+
+\end{defn}
+
+The above properties are generally referred to as the axioms of
+probability (or the Kolmogorov Axioms).  Any function $P$ that
+satisfies the Axioms of Probability is called a probability function.
+The axiomatic definition makes no attempt to tell what particular
+function $P$ to choose; it merely requires $P$ to satisfy the axioms.
+For any sample space many different probability functions can be
+defined.
+
+Consider the simple experiment of tossing a fair coin, so $S = \{H,
+T\}$.  By a ``fair'' coin we mean a balanced coin that is equally
+likely to land on heads as it is tails ($P(\{H\}) = P(\{T\})$).  We
+note the following:
+
+\begin{align*}
+  & P(\{H\}) = P(\{T\}) \\
+  & P(\{H\}) + P(\{T\}) = 1 \\
+  & P(\{H\}) = P(\{T\}) = 0.5
+\end{align*}
+
+\begin{thm}
+  Let $S = \{s_1, \dots, s_n\}$ be a finite set.  Let $\mathcal{B}$ be
+  any sigma algebra of subsets of $S$.  Let $p_1, \dots, p_n$ be
+  nonnegative numbers that sum to 1.  For any $A \in \mathcal{B}$,
+  define $P(A)$ by:
+
+  \begin{align*}
+    & P(A) = \sum_{\{i:s_i \in A\}} p_i
+  \end{align*}
+
+\end{thm}
+
+\begin{proof}
+We will give the proof for finite $S$.  For any $A \in \mathcal{B}$,
+$P(A) = \sum_{\{i:s_i \in A\}} p_i \ge 0$, because every $p_i \ge 0$.
+Thus, Axiom 1 is true.  Now,
+
+\begin{align*}
+  & P(S) = \sum_{\{i:s_i \in A\}} p_i = \sum_{i=1}^n p_i = 1
+\end{align*}
+
+Thus, Axiom 2 is true.  Let $A_1, \dots, A_k$ denote pairwise disjoint
+events.  ($\mathcal{B}$ contains only a finite number of sets, so we
+need consider only finite disjoint unions).  Then,
+
+\begin{align*}
+  & P \left( \bigcup_{i=1}^k A_i \right) = \sum_{\{j:s_j \in
+    \cup_{i=1}^k A_i \}} p_j = \sum_{i=1}^k \sum_{\{j:s_j \in
+    \cup_{i=1}^k A_i \}} p_j = \sum_{i=1}^k P(A_i)
+\end{align*}
+
+The first and third equalities are true by the definition of $P(A)$.
+The disjointedness of the $A_i$'s ensures that the second equality is
+true, because the same $p_j$'s appear exactly once on each side of the
+equality.  Thus Axiom 3 is true and Kolmogorov's Axioms are satisfied.
+
+\end{proof}
+
+\subsection{The Calculus of Probabilities}
+
+\begin{thm}
+If $P$ is a probability function and $A$ is any set in $\mathcal{B}$,
+then
+
+\begin{enumerate}[(a)]
+
+\item $P(\emptyset) = 0$, where $\emptyset$ is the empty set
+
+\item $P(A) \le 1$
+
+\item $P(A^{\complement}) = 1 - P(A)$
+
+\end{enumerate}
+
 \end{thm}
 
 \end{document}
