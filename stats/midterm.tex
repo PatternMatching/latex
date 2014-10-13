@@ -99,11 +99,28 @@ Basis: Let $n=2$.  Then we have:
 
 So we have verified that the relation is true for $n=2$.
 
-Induction Step: Assume that the basis is true for $n=i$.  Now, let $n=i+1$.  We have:
+We will first prove an identity for ${n \choose k}$ that will be useful:
 
 \begin{align*}
-  & \sum_{k=1}^{i+1} (-1)^{k+1} k {i+1 \choose k} = \sum_{k=1}^{i+1} (-1)^{k+1} k \frac{(i+1)!}{k!(i+1-k)!}
+{n \choose k} &= \frac{n!}{k!(n-k)!} \\
+&= \frac{n}{k} \frac{(n-1)!}{(k-1)!(n-k)!} \\
+&= \frac{n}{k} \frac{(n-1)!}{(k-1)!((n-1) - (k-1))!} \\
+&= \frac{n}{k} {n-1 \choose k-1}
 \end{align*}
+
+Induction Step: Assume that the basis is true for $n=i$.  Now, let $n=i+1$.  Using the above identity, we have:
+
+\begin{align*}
+  \sum_{k=1}^{i+1} (-1)^{k+1} k {i+1 \choose k} &= (i+1) \sum_{k=1}^{i+1} (-1)^{k+1} {i \choose k-1}
+\end{align*}
+
+Using a change of variable, we set $j=k-1$ and thusly, we have:
+
+\begin{align*}
+  (i+1) \sum_{k=1}^{i+1} (-1)^{k+1} {i \choose k-1} &= (i+1) \sum_{j=0}^{i} (-1)^j {i \choose j}
+\end{align*}
+
+In solving problem 1.27 (a), we proved that the summation above was equivalent to 0.
 
 \end{proof}
 
@@ -112,21 +129,257 @@ Induction Step: Assume that the basis is true for $n=i$.  Now, let $n=i+1$.  We 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Problem 2}
 
+Let $A_n$ be defined as the event sequence of selecting a specified number from the set of integers $\{1,2, \dots, n+2\}$.  For example, the event $A_1$ is selecting a specified number from the set $\{1,2,3\}$.  Selection is given as being random, and so we can define the probability of $A_n$ as:
+
+\begin{align*}
+  \Pr(A_n) &= \frac{1}{n+2}
+\end{align*}
+
+If we then define $B_n$ as the event sequence of Jim playing the nth game (that he fails to select the specified number during all $n-1$ games played prior), treating the result of selection in any game as indpendent of selection in other games and noting that Jim must play the first game, we can define the probability of Jim playing the nth game as:
+
+\begin{align*}
+  \Pr(B_n) &= \prod_{i=1}^{n-1} 1 - \Pr(A_i)  \\
+  &= \prod_{i=1}^{n-1} \frac{n+1}{n+2} \\
+  &= \frac{n!}{(n+1)!/2} = \frac{2}{n+1}
+\end{align*}
+
+To calculate the probability of Jim playing indefinitely, we express this as follows:
+
+\begin{align*}
+  \Pr \left( \lim_{n \rightarrow \infty} B_n \right)
+\end{align*}
+
+Because we have previously defined the probability function as being continuous, we can rewrite this as:
+
+\begin{align*}
+  \lim_{n \rightarrow \infty} \Pr \left( B_n \right) &= \lim_{n \rightarrow \infty} \frac{2}{n+1} \\
+  &= 0
+\end{align*}
+
+We have shown that the probability that Jim will play indefinitely is zero.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Problem 3}
 
+\begin{enumerate}[(a)]
+  \item In attempting to show that $\Pr \left( A \cap B \cap C \cap D \right) = \Pr(A)\Pr(B|A)P(C|A,B)P(D|A,B,C)$, we are effectively proving a special case of the product/chain rule of conditional probability, which states:
+    \begin{align*}
+      \Pr \left( \bigcap_{i=1}^n A_i \right) &= \Pr(A_1) \Pr(A_2 | A_1) \Pr(A_3 | A_1, A_2) \dots \Pr(A_n | \cap_{i=1}^{n-1} A_i)
+    \end{align*}
+    \begin{proof}
+      To prove the above, we will use induction.  The base case is $n=1$ and corresponds to the statement that $\Pr(A) = \Pr(A)$, which is true.  For the inductive step, let $n > 1$, and assume the inductive hypothesis (below) is true:
+      \begin{align*}
+        \Pr \left( \bigcap_{i=1}^{n-1} A_i \right) &= \Pr(A_1) \Pr(A_2 | A_1) \Pr(A_3 | A_1, A_2) \dots \Pr(A_{n-1} | \cap_{i=1}^{n-2} A_i)
+      \end{align*}
+      We can then use the definition of conditional probability to the two events $A_n$ and $A_{n-1}$ and expanding using the inductive hypothesis to obtain the following:
+
+      \begin{align*}
+        \Pr \left( \bigcap_{i=1}^n A_i \right) &=  \Pr \left(A_n \cap \left( \bigcap_{i=1}^{n-1} A_i \right) \right) = \Pr \left( A_n \bigg| \bigcap_{i=1}^{n-1} A_i \right) \Pr \left( \bigcap_{i=1}^{n-1} A_i \right) \\
+        &= \Pr \left( A_n \bigg| \bigcap_{i=1}^{n-1} A_i \right) \Pr(A_1) \Pr(A_2 | A_1) \dots \Pr(A_{n-1} | \cap_{i=1}^{n-2} A_i)
+      \end{align*}
+    \end{proof}
+  \item We define the following four events:
+    \begin{align*}
+      A_1 &= \{\text{The ace of spades is in any of the piles}\} \\
+      A_2 &= \{\text{The ace of spades and the ace of hearts are in separate piles}\} \\
+      A_3 &= \{\text{The ace of spades, hearts, and diamonds are all in separate piles}\} \\
+      A_4 &= \{\text{All four aces are in separate piles}\}
+    \end{align*}
+
+    We would like to solve for $\Pr(A_4) = \Pr(A_1 \cap A_2 \cap A_3 \cap A_4$.  We note that $\Pr(A_1) = 1$.  The pile containing the ace of spades has, within it, 12 of the remaining 51 cards from the deck.  For the ace of hearts to be in a separate pile ($A_2$), it has to be one of the 39 cards not counted as part of the afforementioned pile.  Therefore:
+
+    \begin{align*}
+      \Pr(A_2 | A_1) &= \frac{39}{51}
+    \end{align*}
+
+    The piles containing the ace of spades and hearts will have 24 other cards in them of the 50 cards that have not been counted as aces so far.  Thusly, for the ace of diamonds to be separate from that of the ace of spades, hearts, it must be one of other 26 cards and so:
+
+    \begin{align*}
+      \Pr(A_3 | A_1, A_2) &= \frac{26}{50}
+    \end{align*}
+
+    Finally, in a similar fashion:
+
+    \begin{align*}
+      \Pr(A_4 | A_1, A_2, A_3) &= \frac{13}{49}
+    \end{align*}
+
+    By the chain rule, we have $\Pr(A_1 \cap A_2 \cap A_3 \cap A_4) = \Pr(A_1) \Pr(A_2 | A_2) \Pr(A_3 | A_1, A_2) \Pr(A_4 | A_1, A_2, A_3)$.  Using the above calculations, we have:
+
+    \begin{align*}
+      \Pr(A_4) &= \Pr(A_1 \cap A_2 \cap A_3 \cap A_4) = 1 \cdot \frac{39}{51} \cdot \frac{26}{50} \cdot \frac{13}{49} = 0.1055
+    \end{align*}
+\end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Problem 4}
 
+In this problem, we are given that $X_k$ is a continuous random variable with the following pdf:
+
+\begin{align*}
+  f_k(x) &= 
+  \begin{cases}
+    \frac{\alpha_k}{x^{k+1}} & \text{ if } x \ge \alpha_k \\
+    0 & \text{ otherwise }
+  \end{cases}
+\end{align*}
+
+\begin{enumerate}[(a)]
+  \item Knowing that $f_k(x)$ is the pdf of a continuous random variable, we can note that it's integral over the support of $X_k$ will be 1.  As such we can evaluate the integral and solve for $\alpha_k$:
+    \begin{align*}
+      \int_{\alpha_k}^{\infty} f_k(x) dx &= 1 \\
+      \int_{\alpha_k}^{\infty} f_k(x) dx &= \lim_{t \rightarrow \infty} \int_{\alpha_k}^t f_k(x) dx \\
+      &= \lim_{t \rightarrow \infty} \alpha_k \left[ \frac{-1}{kx^k} \right]_{\alpha_k}^{t} \\
+      &= \lim_{t \rightarrow \infty} \alpha_k \left[ \frac{-1}{kt^k} - \frac{-1}{k \alpha_k^k} \right] \\
+      &= \frac{\alpha_k}{k \alpha_k^k} = \frac{1}{k \alpha_k^{k-1}}
+    \end{align*}
+    Setting the above expression to 1, we have:
+
+    \begin{align*}
+      \frac{1}{k \alpha_k^{k-1}} &= 1 \\
+      \frac{1}{k} &= \alpha_k^{k-1} \\
+      \alpha_k &= \left( \frac{1}{k} \right)^{\frac{1}{k-1}}
+    \end{align*}
+
+  \item We use the definition of expected value in the context of a continuous random variable and write:
+
+    \begin{align*}
+      \mathrm{E} X_k &= \int_{-\infty}^{\infty} x f_k(x) dx
+    \end{align*}
+
+    We note that this is only to be evaluated over the support of $X_k$ and so we have:
+
+    \begin{align*}
+      \mathrm{E} X_k &= \int_{\alpha_k}^{\infty} x f_k(x) dx \\
+      &= \int_{\alpha_k}^{\infty} \left( \frac{1}{k} \right)^{\frac{1}{k-1}} \frac{x}{x^{k+1}} dx \\
+      &= \int_{\alpha_k}^{\infty} \left( \frac{1}{k} \right)^{\frac{1}{k-1}} \frac{1}{x^{k}} dx \\
+      &= \left( \frac{1}{k} \right)^{\frac{1}{k-1}} \int_{\alpha_k}^{\infty} \frac{1}{x^{k}} dx \\
+      &= \lim_{t \rightarrow \infty} \left( \frac{1}{k} \right)^{\frac{1}{k-1}} \left[ \frac{1}{(1-k)x^{k-1}} \right]_{\alpha_k}^{t} \\
+      &= \lim_{t \rightarrow \infty} \left( \frac{1}{k} \right)^{\frac{1}{k-1}} \left[ \frac{1}{(1-k)t^{k-1}} - \frac{1}{(1-k) \alpha_k^{k-1}} \right] \\
+      &= \left( \frac{1}{k} \right)^{\frac{1}{k-1}} \left[ -\frac{1}{(1-k) \alpha_k^{k-1}} \right] \\
+      &= \frac{\alpha_k}{\alpha_k^{k-1}} \frac{-1}{1-k} \\
+      &= \frac{1}{\alpha_k^{k-2}} \frac{-1}{1-k} \\
+      &= -\frac{k^{\frac{k-2}{k-1}}}{1-k}
+    \end{align*}
+
+  \item We have $Y_k = g(X_k) = \ln{X_k}$ for $k \ge 1$.  Given $\mathcal{X} = [\alpha_k, \infty)$, we also have $\mathcal{Y} = [\ln{\alpha_k}, \infty)$.  Using the method of transformation we can find the pdf of $Y_k$:
+
+    \begin{align*}
+      g(x) &= \ln{x} \\
+      g^{-1}(y) &= e^y \\
+      \frac{d}{dy} g^{-1}(y) = e^y \\
+      f_Y(y) &= 
+      \begin{cases}
+        f_X(g^{-1}(y)) \bigg| \frac{d}{dy} g^{-1}(y) \bigg| & y \in \mathcal{Y} \\
+        0 & \text{ otherwise }
+      \end{cases} \\
+      &= 
+      \begin{cases}
+        \frac{\alpha_k}{e^{y(k+1)}} \bigg| e^y \bigg| & y \in \mathcal{Y} \\
+        0 & \text{ otherwise }
+      \end{cases}
+    \end{align*}
+
+    We note that as $k \ge 1$, $\alpha_k$ and $\mathcal{Y}$ are strictly positive and we can remove the absolute value operator:
+
+    \begin{align*}
+      f_Y(y) &= 
+      \begin{cases}
+        \frac{\alpha_k}{e^{y(k+1)}} e^y = \frac{\alpha_k}{e^{ky}} & y \in \mathcal{Y} \\
+        0 & \text{ otherwise }
+      \end{cases}
+    \end{align*}
+
+  \item To utilize the method of integral transform, we require $F_X(x)$, which is defined as:
+    \begin{align*}
+      P(X \le x) &= F_X(x) = \int_{-\infty}^x f_X(t) dt
+    \end{align*}
+    Noting that $X_2$ is defined on the interval $\left[ \frac{1}{2}, \infty \right)$, we rewrite the integral to conform to the bounds:
+    \begin{align*}
+      F_X(x) &= \int_{1/2}^{x} \frac{1}{2x^{3}} dx \\
+      &= \frac{1}{2} \left[ -\frac{1}{4x^2} \right]_{1/2}^x \\
+      &= \frac{1}{2} \left[ -\frac{1}{4x^2} + \frac{1}{4(1/2)^2} \right] \\
+      &= 1 - \frac{1}{4x^2}
+    \end{align*}
+
+    Because we have samples from $Y = F_X(x)$ and in order to solve for $x$ given $y$, we need to compute $F_X^{-1}(y)$:
+
+    \begin{align*}
+      Y &= F_X(x) = 1 - \frac{1}{4x^2} \\
+      y &= 1 - \frac{1}{4x^2} \\
+      1 - y &= \frac{1}{4x^2} \\
+      \frac{1}{4(1-y)} &= x^2 \\
+      x &= \sqrt{\frac{1}{4(1-y)}} = F_X^{-1}(y)
+    \end{align*}
+
+    Now we can just plug in the random samples from Uniform(O,1) to get the random sample based on the distribution of $X_2$:
+
+    \begin{align*}
+      F_X^{-1}(0.095) &= 0.5256 \\
+      F_X^{-1}(0.9) &= 1.5811 \\
+      F_X^{-1}(0.812) &= 1.152 \\
+      F_X^{-1}(0.231) &= 0.5702 \\
+      F_X^{-1}(0.08) &= 0.5213
+    \end{align*}
+
+\end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Problem 5}
 
+We note that $X \sim \mathrm{N}(0,1)$ and therefore $f_X(x) = \frac{1}{\sqrt{2 \pi}} e^{-x^2/2}$.
+
+\begin{enumerate}[(a)]
+  \item We have $Y = |X|$.  Let $A_0 = {0}$, $A_1 = (-\infty, 0)$, and $A_2 = (0, \infty)$.  Then $g_1(x) = |x| = -x$ on $A_1$ and $g_2(x) = |x| = x$ on $A_2$.  $g_1^{-1}(y) = -y$ and $g_2^{-1}(y) = y$, and both functions have continuous derivatives on $\mathcal{Y}$.  We note that all preconditions of Theorem 2.1.8 are satisfied and therefore, noting that $k=2$, we can continue to apply to calculate the pdf of $Y$:
+
+    \begin{align*}
+      f_Y(y) &=
+      \begin{cases}
+        \sum_{i=1}^k f_X(g_i^{-1}(y)) \bigg| \frac{d}{dy} g_i^{-1}(y) \bigg| & y \in \mathcal{Y} \\
+        0 & \text{otherwise }
+      \end{cases} \\
+      &=
+      \begin{cases}
+        \frac{1}{\sqrt{2 \pi}} e^{-(-y^2)/2} + \frac{1}{\sqrt{2 \pi}} e^{-y^2/2} & y \in \mathcal{Y} \\
+        0 & \text{otherwise}
+      \end{cases} \\
+      &=
+      \begin{cases}
+        \sqrt{\frac{2}{\pi}} e^{-y^2/2} & y \in \mathcal{Y} \\
+        0 & \text{otherwise}
+      \end{cases}
+    \end{align*}
+
+  \item Relying on the definition of the expected value of a continuous random variableand noting that the support of $Y$ is $\mathcal{Y} = (0, \infty)$, we have:
+
+    \begin{align*}
+      \mathrm{E} Y &= \int_{0}^{\infty} y \sqrt{\frac{2}{\pi}} e^{-y^2/2} \\
+      &= \sqrt{\frac{2}{\pi}} \int_0^{\infty} e^{-u} du \\
+      &= \sqrt{\frac{2}{\pi}} \left[ e^{-u} \right|_0^{\infty} = \sqrt{\frac{2}{\pi}}
+    \end{align*}
+
+    \item TBD
+
+    \item 
+      \begin{align*}
+        F_Y(y) &= \Pr(Y \le y) \\
+        &= \Pr(|X| \le y) \\
+        &= \Pr(-y \le X \le y) \\
+        &= \Pr(x \le y) - \Pr(X \le -y) \\
+        &= F_X(y) - F_X(-y) \\
+        &= \frac{d}{dy} F_Y(y) = f_Y \\
+        &= f_X(y) + f_X(-y) \\
+        &= \frac{1}{\sqrt{2 \pi}} e^{-y^2/2} + \frac{1}{\sqrt{2 \pi}} e^{-y^2/2} \\
+        &= \sqrt{\frac{2}{\pi}} e^{-y^2/2}
+      \end{align*}
+
+      The answers for both (a) and (b) are identifical to the pdf calculated above.
+
+\end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Problem 6}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
