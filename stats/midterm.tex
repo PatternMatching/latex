@@ -365,9 +365,9 @@ We note that $X \sim \mathrm{N}(0,1)$ and therefore $f_X(x) = \frac{1}{\sqrt{2 \
         F_Y(y) &= \Pr(Y \le y) \\
         &= \Pr(|X| \le y) \\
         &= \Pr(-y \le X \le y) \\
-        &= \Pr(x \le y) - \Pr(X \le -y) \\
+        &= \Pr(X \le y) - \Pr(X \le -y) \\
         &= F_X(y) - F_X(-y) \\
-        &= \frac{d}{dy} F_Y(y) = f_Y \\
+        f_Y(y) &= \frac{d}{dy} F_Y(y) \\
         &= f_X(y) + f_X(-y) \\
         &= \frac{1}{\sqrt{2 \pi}} e^{-y^2/2} + \frac{1}{\sqrt{2 \pi}} e^{-y^2/2} \\
         &= \sqrt{\frac{2}{\pi}} e^{-y^2/2}
@@ -380,10 +380,24 @@ We note that $X \sim \mathrm{N}(0,1)$ and therefore $f_X(x) = \frac{1}{\sqrt{2 \
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Problem 6}
 
+To show that the moment generating function of $X$ is symmetric about 0, we must show that M_X(0 + \epsilon) = M_X(0 - \epsilon) for all $\epsilon > 0$.
 
+\begin{proof}
+
+\begin{align*}
+  M_X(0 + \epsilon) &= \int_{-\infty}^{\infty} e^{(0+\epsilon)x}f_X(x) dx \\
+  &= \int_{-\infty}^0 e^{\epsilon x} f_X(x) dx + \int_0^{\infty} e^{\epsilon x} f_X(x) dx \\
+  &= \int_0^{\infty} e^{\epsilon (-x)} f_X(-x) dx + \int_{-\infty}^0 e^{\epsilon (-x)} f_X(-x) dx \\
+  &= \int_{-\infty}^{\infty} e^{-\epsilon x} f_X(x) dx \\
+  &= \int_{-\infty}^{\infty} e^{(0-\epsilon)x} f_X(x) dx \\
+  &= M_X(0-\epsilon)
+\end{align*}
+
+\end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Problem 7}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
