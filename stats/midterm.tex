@@ -380,7 +380,7 @@ We note that $X \sim \mathrm{N}(0,1)$ and therefore $f_X(x) = \frac{1}{\sqrt{2 \
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Problem 6}
 
-To show that the moment generating function of $X$ is symmetric about 0, we must show that M_X(0 + \epsilon) = M_X(0 - \epsilon) for all $\epsilon > 0$.
+To show that the moment generating function of $X$ is symmetric about 0, we must show that $M_X(0 + \epsilon) = M_X(0 - \epsilon)$ for all $\epsilon > 0$.
 
 \begin{proof}
 
@@ -398,15 +398,132 @@ To show that the moment generating function of $X$ is symmetric about 0, we must
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Problem 7}
 
+\begin{enumerate}[(a)]
+  \item TO-DO
+  \item From the back of the text, we have that the pmf of the geometric distribution, parameterized by $p$ is as follows:
 
+    \begin{align*}
+      \Pr(X = x | p) &= p(1-p)^{x-1}
+    \end{align*}
+
+    To derive the cdf, we use the definition of cdf in the context of a discrete random variable:
+ 
+    \begin{align*}
+      F_X(x) &= \sum_{i=1}^x p(1-p)^{i-1}
+    \end{align*}
+
+    Using a change of variable ($j=i-1$), we can rewrite the summation as a geometric series:
+
+    \begin{align*}
+      F_X(x) &= \sum_{j=0}^x p(1-p)^j \\
+      &= \frac{p(1-(1-p)^x)}{1 - (1-p)} \\
+      &= 1 - (1-p)^x = 1 - (0.5)^x
+    \end{align*}
+
+    We can utilize the inverse to make the following claim:
+
+    \begin{align*}
+      & F_X^{-1}(F_X(k-1)) < F_X^{-1}(U) \le F_X^{-1}(k) \\
+      & k-1 < U \le k
+    \end{align*}
+
+    Therefore we can derive the inverse cdf of our geometric random variable and round the value it returns up to the nearest integer:
+
+    \begin{align*}
+      F_X(x) &= 1 - \left( \frac{1}{2} \right)^x \\
+      F_X^{-1}(y) &= \log_2{1-y}
+    \end{align*}
+
+    For the individual samples given from $U$, we now can generate the corresponding geometric samples:
+
+    \begin{align*}
+      \ceil{F_X^{-1}(0.981)} &= 6 \\
+      \ceil{F_X^{-1}(0.671)} &= 2 \\
+      \ceil{F_X^{-1}(0.078)} &= 1
+    \end{align*}
+    
+\end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Problem 8}
 
+\begin{align*}
+  \Pr(Y = y) &= \Pr(g(x) = y) \\
+  &= \Pr \left( \frac{X}{X+1} = y \right) \\
+  &= \Pr \left( X = \frac{y}{1-y} \right) \\
+  &= \Pr \left( X = \frac{y}{1-y} \bigg| \lambda \right) = \frac{e^{-\lambda} \lambda^{\frac{y}{1-y}}}{\left( \frac{y}{1-y}\right)!}
+\end{align*}
+
+\begin{center}
+  \begin{tabular}{ | l | l | l | l | }
+    \hline
+    x & 0 & 1 & 2 \\ \hline
+    y & 0 & 1/2 & 2/3 \\ \hline
+    $\Pr(Y = y)$ & $e^{-\lambda}$ & $e^{-\lambda} \lambda$ & $\frac{e^{-\lambda} \lambda^2}{2}$ \\
+    \hline
+  \end{tabular}
+\end{center}
+
+\begin{align*}
+  A &= \bigg\{ \frac{2}{3}, \frac{3}{4}, \frac{7}{8} \bigg\} \\
+  \Pr(Y \in A) &= \sum_{i=1}^3 \Pr(Y = A_i) \\
+  &= \frac{\lambda^2 e^{-\lambda}}{2} + \frac{\lambda^3 e^{-\lambda}}{6} + \frac{\lambda^7 e^{-\lambda}}{5040}
+\end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Problem 9}
 
+The sequence of continuous random variables $X_n$ has the following cdf:
 
+\begin{align*}
+  F_{X_n} &= 
+  \begin{cases}
+    x - \frac{\sin{2n \pi x}}{2n\pi} & 0 < x < 1 \\
+    0 & \text{otherwise}
+  \end{cases}
+\end{align*}
+
+We would like to show that $X_n \xrightarrow{d}$ Uniform$(0,1)$ using the definition of convergence in distribution given but also show that there is no convergence in the sequence of densities to the uniform density.
+
+\begin{proof}
+
+From the back of the text, we have the pdf of a continuous uniform random variable $f_x(x) = \frac{1}{b-a}$ and so we can derive the cdf, noting that in this example $(a,b) = (0,1)$ as follows:
+
+\begin{align*}
+  F_X(x) &= \int_0^x f_x(x) dx = \int_0^x dx = x
+\end{align*}
+
+By the given definition of convergence in distribution, we have:
+
+\begin{align*}
+  \lim_{n \rightarrow \infty} F_{X_n}(x) &= F_X(x) \\
+  \lim_{n \rightarrow \infty} x - \frac{\sin{2 n \pi x}}{2 n \pi} &= x - 0 = x
+\end{align*}
+
+Now, to the density, which we will derive:
+
+\begin{align*}
+  f_{X_n}(x) &= \frac{d}{dx} \left( F_{X_n} (x) \right) \\
+  &= 1 - \cos{2 n \pi x}
+\end{align*}
+
+If we take the limit of the density as $n \rightarrow \infty$, we have:
+
+\begin{align*}
+  \lim_{n \rightarrow \infty} f_{X_n}(x) &= \lim_{n \rightarrow \infty} 1 - \cos{2 n \pi x}
+\end{align*}
+
+This limit does not exist and therefore, the sequence of densities does not converge.
+
+\end{proof}
 
 \end{document}
+
+
+
+
+
+
+
+
+
