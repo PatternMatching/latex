@@ -7,6 +7,7 @@
 \usepackage{algorithm,algpseudocode}
 \usepackage{parskip}
 \usepackage{tikz}
+\usepackage{mathtools}
 \usetikzlibrary{fit,positioning}
 \setlength{\oddsidemargin}{0in}
 \setlength{\evensidemargin}{0in}
@@ -18,6 +19,8 @@
 % Sample macros -- how you define new commands
 % My own set of frequently-used macros have grown to many hundreds of lines.
 % Here are some simple samples.
+
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 
 \newcommand{\Adv}{{\mathbf{Adv}}}       
 \newcommand{\prp}{{\mathrm{prp}}}                  % How to define new commands 
@@ -358,7 +361,20 @@ We note that $X \sim \mathrm{N}(0,1)$ and therefore $f_X(x) = \frac{1}{\sqrt{2 \
       &= \sqrt{\frac{2}{\pi}} \left[ e^{-u} \right|_0^{\infty} = \sqrt{\frac{2}{\pi}}
     \end{align*}
 
-    \item TBD
+    \item 
+
+      \begin{align*}
+        M_Y(t) &= \mathrm{E} \left[ e^{tY} \right] \\
+        &= \int_0^{\infty} e^{ty} \sqrt{\frac{2}{\pi}} e^{-y^2/2} dy \\
+        &= \int_0^{\infty} \sqrt{\frac{2}{\pi}} e^{ty} e^{-y^2/2} dy \\
+        e^{ty} e^{-y^2/2} &= e^{-y^2/2 + ty} \\
+        &= e^{-1/2(y-t)^2} e^{1/2 t^2} \\
+        \int_0^{\infty} \sqrt{\frac{2}{\pi}} e^{ty} e^{-y^2/2} dy &= e^{t^2/2} \int_0^{\infty} \sqrt{\frac{2}{\pi}} e^{-1/2(y-t)^2} dy \\
+        &= e^{t^2/2} \sqrt{\frac{2}{\pi}} \int_0^{\infty} e^{-1/2(y-t)^2} dy \\
+        &= e^{t^2/2} \sqrt{\frac{2}{\pi}} \left[ -\sqrt{\frac{\pi}{2}} \mathrm{Erf} \left( \frac{t-y}{\sqrt{2}} \right) \right]_0^{\infty} \\
+        &= e^{t^2/2} \sqrt{\frac{2}{\pi}} \left[ -\sqrt{\frac{\pi}{2}} \left( -1 \right) + \sqrt{\frac{\pi}{2}} \mathrm{Erf} \left( \frac{t}{\sqrt{2}} \right) \right] \\
+        &= e^{\frac{t^2}{2}} \left(1 + \mathrm{Erf}\left( \frac{t}{\sqrt{2}} \right) \right)
+      \end{align*}
 
     \item 
       \begin{align*}
@@ -399,7 +415,19 @@ To show that the moment generating function of $X$ is symmetric about 0, we must
 \section*{Problem 7}
 
 \begin{enumerate}[(a)]
-  \item TO-DO
+  \item 
+    \begin{proof}
+      Clearly, because of how assignment of $Y$ to a particular value is done, $X$ and $Y$ share the same support, $\mathcal{X}$, which is the set of integers.  We would now like to show that they have equality in distribution, or rather, $F_X(x) = F_y(y)$.  $F_X$ is given as being the cdf of $X$ and therefore we know that it satisifies all the properties of a cdf and by theorem 2.1.10, that $F_X$ is distributed uniformly on the interval $(0,1)$.
+
+      Specifically, to complete the proof, we can show that for all $k \in \mathcal{Y}$,
+
+      \begin{align*}
+        \Pr(Y = k) &= F_X(k) - F_X(k-1) \\
+        F_X(x) &= \sum_{i:i \le k}^k F_X(i) - F_X(i-1) \\
+        &= \sum_{i:i \le k}^k P(Y=i) \\
+        &= \Pr(Y \le k) = F_Y(k)
+      \end{align*}
+    \end{proof}
   \item From the back of the text, we have that the pmf of the geometric distribution, parameterized by $p$ is as follows:
 
     \begin{align*}
@@ -423,15 +451,15 @@ To show that the moment generating function of $X$ is symmetric about 0, we must
     We can utilize the inverse to make the following claim:
 
     \begin{align*}
-      & F_X^{-1}(F_X(k-1)) < F_X^{-1}(U) \le F_X^{-1}(k) \\
-      & k-1 < U \le k
+      & F_X^{-1}(F_X(k-1)) < F_X^{-1}(U) \le F_X^{-1}(F_X(k)) \\
+      & k-1 < F_X^{-1}(U) \le k
     \end{align*}
 
-    Therefore we can derive the inverse cdf of our geometric random variable and round the value it returns up to the nearest integer:
+    Therefore we can derive the inverse cdf of our geometric random variable and round the value it returns up to the nearest integer (take the ceiling):
 
     \begin{align*}
       F_X(x) &= 1 - \left( \frac{1}{2} \right)^x \\
-      F_X^{-1}(y) &= \log_2{1-y}
+      F_X^{-1}(y) &= -\log_2{(1-y)}
     \end{align*}
 
     For the individual samples given from $U$, we now can generate the corresponding geometric samples:
