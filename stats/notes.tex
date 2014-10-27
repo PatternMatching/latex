@@ -256,4 +256,101 @@ then
 
 \end{thm}
 
+\chapter{Transformations and Expectations}
+
+\chapter{Common Families of Distributions}
+
+\chapter{Multiple Random Variables}
+
+\section{Joint and Marginal Distributions}
+
+All models covered so far have been univariate and involve only one random variable.  Models in this chapter will be multivariate and involve more than one random variable.
+
+\begin{defn}
+An n-dimensional random vector is a function from a sample space $S$ into $\mathcal{R}^n$, n-dimensional Euclidean space.  
+\end{defn}
+
+\begin{defn}
+Let $(X,Y)$ be a discrete bivariate random vector.  Then the function $f(x,y)$ from $\mathcal{R}^2$ into $\mathcal{R}$ defined by $f(x,y) = P(X = x, Y = y)$ is called the joint probability mass function or joint pmf of $(X,Y)$.
+\end{defn}
+
+Continuing with our bivariate random vector $(X,Y)$, if we let $A$ be any subset of $\mathcal{R}^2$ then:
+
+\begin{align*}
+  P((X,Y) \in A) &= \sum_{(x,y) \in A} f(x,y)
+\end{align*}
+
+Since $(X,Y)$ is discrete, $f(x,y)$ is nonzero for at most a countable  number of points.  Thus, the sum is a countable sum even if $A$ is an uncountable set.
+
+\begin{defn}
+  A function $f(x,y)$ from $\mathcal{R}^2$ into $\mathcal{R}$ is called a joint probability density function or joint pdf of the continuous bivariate random vector $(X,Y)$ if, for every $A \in \mathcal{R}^2$:
+
+  \begin{align*}
+    P((X,Y) \in A) = \int_A \int f(x,y) dx dy
+  \end{align*}
+\end{defn}
+
+\section{Conditional Distributions and Independence}
+
+Often times, when we observe the value of two or more random variables, the values observed are related.  For example, a person's height and weight are obviously dependent.  Conditional probabilities regarding one variable given knowledge of another variable can be computed using the join distribution of $(X,Y)$.
+
+\begin{defn}
+  Let $(X,Y)$ be a discrete bivariate random vector with joint pmf $f(x,y)$ and marginal pmfs $f_X(x)$ and $f_Y(y)$.  For any $x$ such that $P(X = x) = f_X(x) > 0$, the conditional pmf of $Y$ given that $X = x$ is the function of $y$ denoted by $f(y|x)$ and defined by:
+
+  \begin{align*}
+    f(y|x) &= P(Y = y \, | \, X = x) = \frac{f(x,y)}{f_X(x)}
+  \end{align*}
+
+For any $y$ such that $P(Y = y) = f_Y(y) > 0$, the conditional pmf of $X$ given that $Y = y$ is the function of $x$ denoted by $f(x|y)$ and defined by:
+
+\begin{align*}
+  f(x|y) &= P(X = x \, | \, Y = y) = \frac{f(x,y)}{f_Y(y)}
+\end{align*}
+
+\end{defn}
+
+\begin{defn}
+Let $(X,Y)$ be a continuous bivariate random vector with joint pdf $f(x,y)$ and marginal pdfs $f_X(x)$ and $f_Y(y)$.  For any $x$ such that $f_X(x) > 0$, the conditional pdf of $Y$ given that $X = x$ is the function of $y$ denoted by $f(y|x)$ and defined by:
+
+\begin{align*}
+  f(y|x) &= \frac{f(x,y)}{f_X(x)}
+\end{align*}
+
+\end{defn}
+
+The conditional pmf's can also be used to calculate expected values.  IF $g(Y)$ is a function of $Y$, then the conditional expected value of $g(Y)$ given that $X = x$ is denoted $\mathrm{E}\left[g(Y) \, | \, x \right]$ and is given by:
+
+\begin{align*}
+  \mathrm{E}\left[g(Y) \, | \, x \right] &= \sum_y g(y) f(y|x) \\
+  \mathrm{E}\left[g(Y) \, | \, x \right] &- \int_y g(y) f(y|x) dy
+\end{align*}
+
+The variance of the probability distribution described by $f(y|x)$ is called the conditional variance of $Y$ given $X = x$.  Using the notation $Var(Y \, | \, x)$ for this, we have, using the oridinary definition of variance,
+
+\begin{align*}
+  \mathrm{Var}(Y \, | \, x) &= \mathrm{E}(Y^2 \, | \, x) - (\mathrm{E}(Y \, | \, x))^2
+\end{align*}
+
+\begin{defn}
+  Let $(X, Y)$ be a bivariate random vector with joint pdf or pmf $f(x,y)$ and marginal pdfs or pmfs $f_X(x)$ and $f_Y(y)$.  Then $X$ and $Y$ are called independent random variables if, for every $x \in \mathcal{R}$ and $y \in \mathcal{R}$,
+
+  \begin{align*}
+    f(x,y) &= f_X(x) f_Y(y)
+  \end{align*}
+
+  If $X$ and $Y$ are independent, the conditional pdf of $Y$ given $X = x$ is:
+
+  \begin{align*}
+    f(y|x) &= \frac{f(x,y)}{f_X(x)} \\
+    &= \frac{f_X(x) f_Y(y)}{f_X(x)} \\
+    &= f_Y(y)
+  \end{align*}
+
+  regardless of the value of $x$.
+\end{defn}
+
+\begin{thm}
+  Let $(X,Y)$ be a bivariate random vector with joint pdf or pmf $f(x,y)$.  Then $X$ and $Y$ are independent random variables if and only if there exists $g(x)$ and $h(y)$ such that, for every $x \in \mathcal{R}$ and $y \in \mathcal{R}$:
+\end{thm}
+
 \end{document}
