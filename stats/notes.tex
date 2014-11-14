@@ -20,6 +20,9 @@
 \theoremstyle{theorem}
 \newtheorem{thm}{Theorem}[section]
 
+\theoremstyle{example}
+\newtheorem{ex}{Example}[section]
+
 \begin{document}
 \maketitle
 
@@ -352,5 +355,42 @@ The variance of the probability distribution described by $f(y|x)$ is called the
 \begin{thm}
   Let $(X,Y)$ be a bivariate random vector with joint pdf or pmf $f(x,y)$.  Then $X$ and $Y$ are independent random variables if and only if there exists $g(x)$ and $h(y)$ such that, for every $x \in \mathcal{R}$ and $y \in \mathcal{R}$:
 \end{thm}
+
+\chapter{Properties of a Random Sample}
+
+\section{Basic Concepts of Random Samples}
+
+\begin{defn}
+  The random variables $X_1, \dots, X_n$ are called a random sample of size $n$ from population $f(x)$ if $X_1, \dots, X_n$ are mutually independent random variables and the marginal pdf or pmf of each $X_i$ is the same function $f(x)$.  They are also known as being IID.
+\end{defn}
+
+Each observation $X_i$ is on the same variable and each $X_i$ has a marginal probability distribution given by $f(x)$.  The value of one observation has no effect on or relationship with any of the other observations; that is, $X_1, \dots, X_n$ are mututally independent.  The joint pdf or pmf of $X_1, \dots, X_n$ is given by:
+
+\begin{align*}
+  f(x_1, \dots, x_n) = f(x_1)f(x_2) \dots f(x_n) = \prod_{i=1}^n f(x_i)
+\end{align*}
+
+If the population pdf or pmf is a member of a parameter family, the joint pdf or pmf is then denoted:
+
+\begin{align*}
+  f(x_1, \dots, x_n \, | \, \theta) = \prod_{i=1}^n f(x_i \, | \, \theta)
+\end{align*}
+
+where the same parameter value $\theta$ is used in each of the terms in the product.  If we assume that the population follows a specified parametetric family of distribution but the true parameter value is unknown, then we note $\theta$ as being unknown.  By considering different possible values of $\theta$, we can study how a random sample would behave for different populations (e.g. maximum likelihood parameter estimation).
+
+\begin{ex}
+  Let $X_1, \dots, X_n$ be a random sample from an exponential ($\beta$) population.  Specifically, $X_1, \dots, X_n$ might correspond to the tiems until failure (measured in years) for $n$ identical circuit boards that are put on test and used until they fail.  The joint pdf of the sample is
+
+  \begin{align*}
+    f(x_1, \dots, x_n \, | \, \beta) &= \prod_{i=1}^n f(x_i \, | \, \beta) = \prod_{i=1}^n \frac{1}{\beta} e^{-x_i / \beta} = \frac{1}{\beta^n}e^{-(x_1 + \dots + x_n)/\beta}
+  \end{align*}
+
+  We can then answer questions about the sample.  For example, what is the probability that all the boards last more than 2 years?  We can compute:
+
+  \begin{align*}
+    P(X_1 > 2, \dots, X_n > 2) &\\
+    &= \int_2^{\infty} \dots 
+  \end{align*}
+\end{ex}
 
 \end{document}
