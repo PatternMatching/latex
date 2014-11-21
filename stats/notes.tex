@@ -263,6 +263,99 @@ then
 
 \chapter{Common Families of Distributions}
 
+\section{Discrete Distributions}
+
+A random variable $X$ is said to have a discrete distribution if the range of $X$, the sample space, is countable.  In most of these situations, the random variable has integer-valued outcomes.
+
+\textit{Discrete Uniform Distribution}
+
+A random variable $X$ has a discrete uniform $(1,N)$ distribution if
+
+\begin{align*}
+  P(X = x \, | \, N) &= \frac{1}{N}, & x = 1, 2, \dots, N
+\end{align*}
+
+where $N$ is a specified integer.  This distribution puts equal mass on each of the outcomes $1,2,\dots,N$.
+
+When we deal with parametric distributions, as is mostly the case, the distribution is dependent on values of the parameters.  In order to emphasize this fact and to keep track of params, we write them in the pmf preceded by a ``$|$'' (given).
+
+To calculate the mean and variance of $X$, recall the identities (provable by induction)
+
+\begin{align*}
+  \sum_{i=1}^k &= \frac{k(k+1)}{2} \text{ and } \\
+  \sum_{i=1}^k i^2 &= \frac{k(k+1)(2k+1)}{6}
+\end{align*}
+
+We then have
+
+\begin{align*}
+  \mathrm{E} \left[ X \right] &= \sum_{i=1}^N x P(X = x \, | \, N) = \sum_{i=1}^N x \frac{1}{N} = \frac{N+1}{2} \\
+  \mathrm{E} \left[ X^2 \right] &= \sum_{i=1}^N x^2 \frac{1}{N} = \frac{(N+1)(2N+1)}{6} \\
+  \mathrm{Var}(X) &= \mathrm{E} \left[ X^2 \right] - \left( \mathrm{E} \left[ X \right] \right)^2 \\
+  &= \frac{(N+1)(2N+1)}{6} - \left( \frac{N+1}{2} \right)^2 \\
+  &= \frac{(N+1)(N-1)}{12}
+\end{align*}
+
+\textit{Hypergeometric Distribution}
+
+The hypergeometric distribution has many applications in finite population sampling and is best understood through the classic example of the urn model.
+
+Suppose we have a large urn filled with $N$ balls that are identical in every way except that $M$ are red and $N-M$ are green.  We reach in, blindfolded, and select $K$ balls at random (the $K$ balls are taken all at once, a case of sampling without replacement).  What is the probability that exactly $x$ are red?
+
+The total number of samples of size $K$ that can be drawn from the $N$ balls is ${N \choose K}$.  It is required that $x$ of the balls be red, and this can be accomplished in ${M \choose x}$ ways, leaving ${N-M \choose K-x}$ ways of filling out the sample with $K-x$ green balls.  Thus, if we let $X$ denote the number of red balls in a sample of size $K$, then $X$ has a hypergeometric distribution given by:
+
+\begin{align*}
+  P(X = x \, | \, N, M, K) &= \frac{{M \choose K} {N-M \choose K-x}}{{N \choose K}}
+\end{align*}
+
+The mean is given by
+
+\begin{align*}
+  \mathrm{E} \left[ X \right] &= \sum_{i=0}^K x \frac{{M \choose x} {N-M \choose K-x}}{{N \choose K}} = \sum_{i=1}^K x \frac{{M \choose x} {N-M \choose K-x}}{{N \choose K}}
+\end{align*}
+
+Rewriting as a summation from zero and using the combinatoric identities from Chapter 2, we simplifyto obtain:
+
+\begin{align*}
+  \mathrm{E} \left[ X \right] &= \sum_{x=1}^K \frac{M {M-1 \choose x-1}{N-m \choose K-x}}{\frac{N}{K}{N-1 \choose K-1}} = \frac{KM}{N} \sum_{i=1}^K \frac{{M-1 \choose x-1}{N-M \choose K-x}}{{N-1 \choose K-1}} \\
+  &= \frac{KM}{N}
+\end{align*}
+
+Similarly, for the variance:
+
+\begin{align*}
+  \mathrm{Var} X &= \frac{KM}{N} \left( \frac{(N-M)(N-K)}{N(N-1)} \right)
+\end{align*}
+
+\begin{ex}
+  The hypergeometric distribution has application in acceptance sampling, as this example will illustrate.  Suppose a retailer buys goods in lots and each item can be either acceptable or defective.  Let
+  \begin{center}
+    $N = $ # of items in a lot, \\
+    $M = $ # of defectives in a lot
+  \end{center}
+
+Then we can calculate the probability that a sample of size $K$ contains $x$ defectives.  To be specific, suppose that a lot of 25 machine parts is delivered, where a part is considered acceptable only if it passes tolerance.  We sample 10 parts and find that none are defective (all are within tolerance).  What is the probability of this event if there are 6 defectives in the lor of 25?  Applying the hypergeometric distribution with $N=25, M=6, K=10$, we have
+
+\begin{align*}
+  P(X=0) &= \frac{{6 \choose 0}{19 \choose 10}}{{25 \choose 10}} = 0.028
+\end{align*}
+
+showing that our observed event is quite unlikely if there are 6 (or more!) defectives in the lot.
+\end{ex}
+
+\textit{Binomial Distribution}
+
+The binomial distribution, one of the more useful discrete distributions, is based on the idea of a Bernoulli trial.  A Bernoulli trial (named for James Bernoulli, one of the founding fathers of probability theory) is an experiment with two, and only two, possible outcomes.  A random variable $X$ has a \textit{Bernoulli}$(p)$ distribution if
+
+\begin{align*}
+  X &= 
+  \begin{cases} 
+    1 & \text{with probability } p \\
+    0 & \text{with probability } 1-p
+  \end{cases}
+\end{align*}
+
+
 \chapter{Multiple Random Variables}
 
 \section{Joint and Marginal Distributions}
