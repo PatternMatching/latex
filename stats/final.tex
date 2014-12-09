@@ -340,6 +340,35 @@ to take the limit as $t \rightarrow 0$,
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Problem 5}
 
+\begin{enumerate}[(a)]
+  \item 
+    \begin{align*}
+      \mathrm{E}[h(X)] &= \int h(x) f(x) dx = \int h(x)
+      \frac{f(x)}{g(x)} g(x) dx \approx \frac{1}{m} \sum_{i=1}^m
+      h(Y_i) \frac{f(Y_i)}{g(Y_i)}
+    \end{align*}
+
+  \item As we have proven the above, we additionally know that the
+    sample average converges in probability to the population average
+    no matter what the distribution.  This being the case, we also
+    know that any sample average of a function $h(X)$ will also
+    converge in probability to its expected value.
+
+  \item 
+    \begin{align*}
+      &\sum_{i=1}^m \frac{\frac{f(Y_1)}{g(Y_i)}}{\sum_{j=1}^m
+        \frac{f(Y_j)}{g(Y_j)}} h(Y_1) \\ 
+      &= \frac{\sum_{i=1}^m
+        h(Y_i)/g(Y_i)}{\sum_{j=1}^m f(Y_i)/g(Y_i)} \\
+      &= \frac{1}{m} \sum_{i=1}^m \frac{h(Y_i)}{g(Y_i)} \cdot
+      \frac{m}{\sum_{j=1}^m \frac{f(Y_i)}{g(Y_i)}} \\
+      &= h(\bar{X}) \\
+      &\approx \mathrm{E}[h(X)]
+    \end{align*}
+
+  \item
+
+\end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Problem 6}
