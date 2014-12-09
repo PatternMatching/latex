@@ -247,19 +247,19 @@ independence, we can evaluate this expectation using integration/sums,
 
 \begin{align*}
   \mathrm{E}[\mathrm{E}[(Pe^t + (1-P))^N \mid N,P]] &=
-                                                      \sum_{n=0}^{\infty}
-                                                      \int_0^1
-                                                      (pe^t+(1-p))^n
-                                                      \Pr{(p,n)} dp \\
+  \sum_{n=0}^{\infty} \int_0^1 (pe^t+(1-p))^n
+  \Pr{(p,n)} dp \\
   &= \sum_{n=0}^{\infty} \int_0^1 (pe^t+(1-p))^n \Pr{(p)} \Pr{(n)} dp \\
-  &= \sum_{n=0}^{\infty} \int_0^1 (pe^t+(1-p))^n \left( 12(1-p)^2 p \right) \left(
-\frac{e^{-\lambda} \lambda^n}{n!} \right) dp \\
-  &= \sum_{n=0}^{\infty} \left( \frac{e^{-\lambda} \lambda^n}{n!} \right) 
-    \int_0^1 (pe^t+(1-p))^n \left( 12(1-p)^2 p \right)  dp \\
-  &= \frac{12 e^{-\lambda } \left(2 e^{\lambda  e^t} \left(\lambda
-    \left(e^t-1\right)-3\right)+e^{\lambda } \left(\lambda
-    \left(e^t-1\right) \left(\lambda
-    \left(e^t-1\right)+4\right)+6\right)\right)}{\lambda^4
+  &= \sum_{n=0}^{\infty} \int_0^1 (pe^t+(1-p))^n \left( 12(1-p)^2 p
+  \right) \left(
+    \frac{e^{-\lambda} \lambda^n}{n!} \right) dp \\
+  &= \sum_{n=0}^{\infty} \left( \frac{e^{-\lambda} \lambda^n}{n!}
+  \right)
+  \int_0^1 (pe^t+(1-p))^n \left( 12(1-p)^2 p \right)  dp \\
+  &= \frac{12 e^{-\lambda } \left(2 e^{\lambda e^t} \left(\lambda
+        \left(e^t-1\right)-3\right)+e^{\lambda } \left(\lambda
+        \left(e^t-1\right) \left(\lambda
+          \left(e^t-1\right)+4\right)+6\right)\right)}{\lambda^4
     \left(e^t-1\right)^4}
 \end{align*}
 
@@ -281,12 +281,61 @@ this actually results in an indeterminate form and so we end up having
 to take the limit as $t \rightarrow 0$,
 
 \begin{align*}
-  \lim_{t \rightarrow 0} M_T^'(t) &= \frac{2\lambda n}{5}
+  \lim_{t \rightarrow 0} M_T^{'}(t) &= \frac{2\lambda n}{5}
 \end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Problem 4}
 
+\begin{enumerate}[(a)]
+  \item We have the random variable $X$ with PDF $f(x) = \sqrt{2/\pi}
+    e^{-x^2/2}$ with $\mathrm{E}[X] = \sqrt{2/\pi}$ and
+    $\mathrm{Var}(X) = \frac{\pi-2}{\pi}$.  If we have a function
+    $g(x) = x^2$, which we know to be $\chi^2$ and
+    Gamma$(\alpha=1/2,\beta=2)$, we would like to estimate
+    $\mathrm{E}[1/g(x)]$ and $\mathrm{Var}(1/g(x))$.  We can do this
+    using the delta method.  In this case, we'd like the second-order
+    Taylor series expansion.
+
+    If we set $Y = X^2, h(y) = \frac{1}{Y}$, we have
+
+    \begin{align*}
+      h(y) &\approx h(\mu) + h^{'}(\mu)(y-\mu) +
+      \frac{h^{''}(\mu)(y-\mu)^2}{2} \\
+      &\approx \frac{1}{\mu} - \frac{y-\mu}{\mu^2} +
+      \frac{2(y-\mu)^2}{\mu^3}
+    \end{align*}
+
+    As we know that $Y \sim \mathrm{Gamma}(1/2, 2)$, we have that $\mu
+    = 1/4$.  Now taking the expectation of the approximation, we have,
+    \begin{align*}
+      \mathrm{E}[h(y)] &\approx \mathrm{E}\left[ \frac{1}{\mu}
+      \right]- \mathrm{E} \left[ \frac{y-\mu}{\mu^2} \right] +
+      \mathrm{E} \left[ \frac{2(y-\mu)}{\mu^3} \right] \\
+      &\approx \frac{1}{\mu} - \frac{1}{\mu^2}\mathrm{E}[Y] +
+      \frac{1}{\mu} + \frac{2 \mathrm{E}[Y]}{\mu^3} - \frac{2}{\mu^2}
+      \\
+      &\approx \frac{1}{\mu} \\
+      &\approx 4
+    \end{align*}
+
+    Similarly, for the variance,
+    \begin{align*}
+      \mathrm{Var}(h(y)) &= \mathrm{Var}(h^{'}(\mu)(y-\mu)) +
+      \mathrm{Var}\left( \frac{2 h^{''}(\mu)(y-\mu)}{2} \right) + 2
+      \mathrm{Cov}\left( h^{'}(\mu)(y-\mu), \frac{h^{''}(\mu)
+          (y-\mu)^2}{2} \right) \\
+      &= \mathrm{Var}\left( \frac{\mu-y}{\mu^2} \right) + \mathrm{Var}
+      \left( \frac{2(y-\mu)}{\mu^3} \right) + 2 \mathrm{E} \left[
+        \left( \frac{\mu-y}{\mu^2} - \mathrm{E}\left[
+            \frac{\mu-y}{\mu^2} \right] \right) \left(
+          \frac{2(y-\mu)}{\mu^3} -
+          \mathrm{E}\left[\frac{2(y-\mu)}{\mu^3}\right]\right) \right]
+      \\
+      &= 
+    \end{align*}
+
+\end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Problem 5}
