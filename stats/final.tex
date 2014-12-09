@@ -129,7 +129,28 @@ distributed with $\mu_z = \mu_y - \mu_x$ and variance $\sigma_z^2 =
     Furthermore, $X \rightarrow N(0, np(1-p))$ in distribution.
     Combining via Slutsky's, we have that $XY \xrightarrow{D} N(0,1)$.
 
-  \item 
+  \item Define a random variable $Z = XY$ as specified above.  We have
+    shown that $Z$ converges to the standard normal in distribution so
+    we can define a 95\% ($\alpha = 0.05$) confidence interval for the
+    normal approximation of the binomial as
+
+    \begin{align*}
+      p \pm z_{1-\alpha/2} \sqrt{\frac{p(1-p)}{n}}
+    \end{align*}
+
+    So for, $T_1 = 35, n = 80, \alpha = 2$, we have $P_1 = 0.4375, z =
+    1.96$ and so the interval $(c,d)$ assures coverage of 95\% is,
+
+    \begin{align*}
+      (c,d) &= P_1 \pm 1.96 \sqrt{\frac{(0.4375)*(0.5625)}{80}} =
+              (0.3288, 0.5462)
+    \end{align*}
+
+  \item We can use the bivariate delta method to show that as $\theta
+    = g(\mu_{T_1}, \mu_{T_2}) = \frac{P_1(1-P_2)}{P_2(1-P_1)}$ is
+    continuous, the function
+    $\frac{\bar{X_n}(1-\bar{Y_n})}{\bar{Y_n}(1-\bar{X_n})}$
+    converges in probability to $g(P_1,P_2) = \theta$.
 \end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
