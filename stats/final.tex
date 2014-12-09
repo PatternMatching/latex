@@ -1,0 +1,410 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{MnSymbol}
+\usepackage{algorithm,algpseudocode}
+\usepackage{parskip}
+\usepackage{tikz}
+\usepackage{mathtools}
+\usetikzlibrary{fit,positioning}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\textheight}{9in}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{-0.5in}
+\setlength\parindent{0pt}
+
+% Sample macros -- how you define new commands
+% My own set of frequently-used macros have grown to many hundreds of lines.
+% Here are some simple samples.
+
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+
+\newcommand{\Adv}{{\mathbf{Adv}}}       
+\newcommand{\prp}{{\mathrm{prp}}}                  % How to define new commands 
+\newcommand{\calK}{{\cal K}}
+\newcommand{\outputs}{{\Rightarrow}}                
+\newcommand{\getsr}{{\:\stackrel{{\scriptscriptstyle\hspace{0.2em}\$}}{\leftarrow}\:}}
+\newcommand{\andthen}{{\::\;\;}}    % \, \: \; for thinspace, medspace, thickspace
+\newcommand{\Rand}[1]{{\mathrm{Rand}[{#1}]}}       % A command with one argument
+\newcommand{\Perm}[1]{{\mathrm{Perm}[{#1}]}}       
+\newcommand{\Randd}[2]{{\mathrm{Rand}[{#1},{#2}]}} % and with two arguments
+\newcommand{\E}[1]{{\mathrm{E}\left[{#1}\right]}}
+\newcommand{\Cov}[2]{{\mathrm{Cov}[{#1},{#2}]}}
+\newcommand{\Var}[1]{{\mathrm{Var}[{#1}]}}
+\newcommand{\tab}[1]{\hspace{.2\textwidth}\rlap{#1}}
+\newcommand{\itab}[1]{\hspace{0em}\rlap{#1}}
+
+\newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{\bf Final Exam Submission\\[2ex] 
+       \rm\normalsize EN605.725 --- Fall 2014}
+\date{\today}
+\author{\bf Peter Hennings}
+
+\begin{document}
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Problem 1} 
+
+In this problem, we have two random variables:
+$T = R^2 \sim \mathrm{Exp}(\lambda)$ and $\Theta \sim
+\mathrm{Uniform}(0,2 \pi)$.  If we let $X = R \cos{\Theta}$ and $Y = R
+\sin{\Theta}$, we can rewrite using $R = \sqrt{T}$ and utilize the
+bivariate transformation method as follows:
+
+\begin{align*}
+  X &= \sqrt{T} \cos{\Theta}, Y = \sqrt{T} \sin{\Theta} \\
+  t &= x^2 + y^2, \theta = \arctan{y/x}
+\end{align*}
+
+Furthermore, we know that $T$ and $\Theta$ are independent and
+therefore their joint density is as follows:
+
+\begin{align*}
+  f_{T,\Theta}(t,\theta) &= f_T(t) f_{\Theta}(\theta) = \left(
+                           \frac{1}{\lambda} e^{-t/\lambda}  \right)
+                           \left( \frac{1}{2 \pi} \right) = \frac{1}{2
+                           \pi \lambda} e^{-t/\lambda}
+\end{align*}
+
+The Jacobian is then:
+
+\begin{align*}
+  J &= \begin{bmatrix} 2x & 2y \\ \frac{-y}{x^2+y^2} &
+    \frac{x}{x^2+y^2} \end{bmatrix} = 2
+\end{align*}
+
+So, we then have the joint density:
+
+\begin{align*}
+  f_{X,Y}(x,y) &= f_{T,\Theta}(t,\theta) \cdot \left| J \right| \\
+  &= \frac{2}{2 \pi \lambda} e^{-(x^2+y^2)/\lambda} = \frac{1}{\pi \lambda} e^{-(x^2+y^2)/\lambda}
+\end{align*}
+
+We can then separate this joint density into two products:
+
+\begin{align*}
+  f_{X,Y}(x,y) &= \left( \frac{1}{\sqrt{2 \pi \frac{\lambda}{2}}} e^{-x^2/\lambda}
+                 \right) \left( \frac{1}{\sqrt{2 \pi \frac{\lambda}{2}}} e^{-y^2/\lambda} \right)
+\end{align*}
+
+Using this result and by Lemma 4.2.7, $X$ and $Y$ are independent, normal
+distributions with $\mu = 0, \sigma = \lambda/2$.
+
+We would now like to find $\Pr{(X < Y)}$.  We can set another random
+variable $Z = Y - X$ and equivalently find $\Pr{(Z > 0)}$.  We note that
+by independence of $X$ and $Y$, we have that $Y-X$ is normally
+distributed with $\mu_z = \mu_y - \mu_x$ and variance $\sigma_z^2 =
+\mathrm{Var}(Y-X) = \sigma_y^2 + \sigma_x^2$.  Thusly,
+
+\begin{align*}
+  \frac{Y-X-\mu_z}{\sigma_z} &\sim \mathrm{N}(0,1) \\
+  \Pr{(Z > 0)} &= 1 - \Pr{(Z \le 0)} = 1 - \Phi \left(
+                  \frac{-\mu_z}{\sigma_z} \right) = 1 - \Phi (0) = 0.5
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Problem 2}
+
+\begin{enumerate}[(a)]
+  \item If we let $X = T_1 - n P_1$ and $Y =
+    \sqrt{\frac{n}{T_1(n-T_1)}}$, we can apply Slutsky's Theorem as
+    follows.  Since $\frac{T_1}{n} \rightarrow P_1$ in probability and
+    $\frac{n-T_1}{n} \rightarrow 1-P_1$, we have
+
+    \begin{align*}
+      Y &= \sqrt{\frac{1}{\frac{T_1(n-T_1)n}{n^2}}} \rightarrow
+          \sqrt{\frac{1}{nP_1(1-P_1)}}
+    \end{align*}
+    which is a constant.  As convergence in probability is preserved
+    under continuous transformations, we see that $Y$ converges in
+    probability to $\sigma$ of the Binomial distribution.
+
+    Furthermore, $X \rightarrow N(0, np(1-p))$ in distribution.
+    Combining via Slutsky's, we have that $XY \xrightarrow{D} N(0,1)$.
+
+  \item 
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Problem 3}
+
+We are given that the number of customers who stop by a local bank
+during a working day is $N \sim \mathrm{Poisson}(\lambda)$.  Also, we
+have that the probability of a customer that enters the bank
+withdrawing from his/her savings account is $P \sim
+\mathrm{Beta}(2,3)$.  Finally, we let $X \mid (P,N) \sim
+\mathrm{Binomial}(N,P)$ be the number of customers who withdraw from
+savings during the working day and assume that $N$ and $P$ are
+independent.
+
+We would like to find $\mathrm{E}[X]$ and $\mathrm{Var}(X)$.  To do
+this, we first require the marginal distribution of $X$.
+
+From Theorem 4.4.3 and the previously proved expected value of
+$\mathrm{Binomial}(n,p)$, $\mathrm{Poisson}(\lambda)$, and
+$\mathrm{Beta}(\alpha, \beta)$, we have
+
+\begin{align*}
+  \mathrm{E}[X] &= \mathrm{E}[\mathrm{E}[X \mid N,P]] \\
+  &= \mathrm{E}[NP] \\
+  &= \mathrm{E}[N] \mathrm{E}[P] \\
+  &= \lambda \frac{2}{5}
+\end{align*}
+
+Similarly, from Theorem 4.4.7, we have
+
+\begin{align*}
+  \mathrm{Var}(X) &= \mathrm{E}[\mathrm{Var}(X \mid N,P)] +
+                    \mathrm{Var}(\mathrm{E}[X \mid N,P]) \\
+  &= \mathrm{Var}(NP) + \mathrm{E}[NP(1-P)]
+\end{align*}
+
+We have previously shown that the variance of the product of two
+independent random variables, $\mathrm{Var}(XY) = \mathrm{Var}(X)
+\mathrm{Var}(Y) + \mathrm{Var}(X) \mathrm{E}[Y]^2 + \mathrm{Var}(Y)
+\mathrm{E}[X]^2$.
+
+Therefore, additionally noting that $\mathrm{Var}(N) = \lambda,
+\mathrm{Var}(P) = \frac{\alpha
+  \beta}{(\alpha+\beta)^2(\alpha+\beta+1)} = \frac{1}{36}$,
+
+\begin{align*}
+  \mathrm{Var}(X) &= \mathrm{Var}(N) \mathrm{Var}(P) +
+                    \mathrm{Var}(N)\mathrm{E}[P]^2 + \mathrm{Var}(P)
+                    \mathrm{E}[N]^2 + \mathrm{E}[N] \mathrm{E}[P(1-P)]
+  \\
+  &= (\lambda)\left(\frac{1}{36}\right) + \lambda \left( \frac{4}{25}
+    \right) + \left( \frac{1}{36} \right) \lambda^2 + \lambda \mathrm{E}[P(1-P)]
+\end{align*}
+
+We leave $\mathrm{E}[P(1-P)]$ as it is not given from the back of the
+book and we did not explicitly derive:
+
+\begin{align*}
+  \mathrm{E}[P(1-P)] &= \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)
+                       \Gamma(\beta)} \int_0^1 p(1-p)
+                       p^{\alpha-1}(1-p)^{\beta-1} dp \\
+\end{align*}
+
+The integrand is, in fact, the kernal of another beta and so,
+
+\begin{align*}
+  \mathrm{E}[P(1-P)] &= \frac{\alpha \beta}{(\alpha + \beta)(\alpha +
+                       \beta + 1)} = \frac{1}{5}
+\end{align*}
+
+Bringing the pieces together, we have
+
+\begin{align*}
+  \mathrm{Var}(X) &= \frac{\lambda}{36} + \frac{4 \lambda}{25} +
+                    \frac{\lambda^2}{36} + \frac{\lambda}{5} =
+                    \frac{\lambda^2}{36} + \frac{349\lambda}{900}
+\end{align*}
+
+We now want to find a general form for the moment generating function
+$M_T(t)$ for the random variable $T$, which is the sum of the sequence
+of independent random variables $X_1, X_2, \dots, X_n$.  Because of
+independence, we have $M_T(t) = \prod_{i=1}^n M_{X_i}(t)$.  Also, we
+have that each $X_i$ is identically distributed and so we further have
+that $M_T(t) = M_X(t)^n$.  We begin by using the definition of the
+moment generating function,
+
+\begin{align*}
+  M_X(t) &= \mathrm{E}[e^tX] \\
+  &= \mathrm{E}[\mathrm{E}[(Pe^t + (1-P))^N \mid N,P]]
+\end{align*}
+
+Because we have the joint density of $N$ and $P$ due to their
+independence, we can evaluate this expectation using integration/sums,
+
+\begin{align*}
+  \mathrm{E}[\mathrm{E}[(Pe^t + (1-P))^N \mid N,P]] &=
+                                                      \sum_{n=0}^{\infty}
+                                                      \int_0^1
+                                                      (pe^t+(1-p))^n
+                                                      \Pr{(p,n)} dp \\
+  &= \sum_{n=0}^{\infty} \int_0^1 (pe^t+(1-p))^n \Pr{(p)} \Pr{(n)} dp \\
+  &= \sum_{n=0}^{\infty} \int_0^1 (pe^t+(1-p))^n \left( 12(1-p)^2 p \right) \left(
+\frac{e^{-\lambda} \lambda^n}{n!} \right) dp \\
+  &= \sum_{n=0}^{\infty} \left( \frac{e^{-\lambda} \lambda^n}{n!} \right) 
+    \int_0^1 (pe^t+(1-p))^n \left( 12(1-p)^2 p \right)  dp \\
+  &= \frac{12 e^{-\lambda } \left(2 e^{\lambda  e^t} \left(\lambda
+    \left(e^t-1\right)-3\right)+e^{\lambda } \left(\lambda
+    \left(e^t-1\right) \left(\lambda
+    \left(e^t-1\right)+4\right)+6\right)\right)}{\lambda^4
+    \left(e^t-1\right)^4}
+\end{align*}
+
+With this general form of the MGF for $X$, we have only to
+exponentiate this expression by $n$ and so,
+
+
+\begin{align*}
+  M_T(t) &= \left( \frac{12 e^{-\lambda } \left(2 e^{\lambda  e^t}
+           \left(\lambda \left(e^t-1\right)-3\right)+e^{\lambda}
+           \left(\lambda \left(e^t-1\right) \left(\lambda
+           \left(e^t-1\right)+4\right)+6\right)\right)}{\lambda^4
+           \left(e^t-1\right)^4} \right)^n
+\end{align*}
+
+To utilize this in getting $\mathrm{E}[T]$, we must now take the first
+derivative with respect to $t$ and evaluate at $t=0$.  We see that
+this actually results in an indeterminate form and so we end up having
+to take the limit as $t \rightarrow 0$,
+
+\begin{align*}
+  \lim_{t \rightarrow 0} M_T^'(t) &= \frac{2\lambda n}{5}
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Problem 4}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Problem 5}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Problem 6}
+
+We have $X \mid M \sim \mathrm{Poisson}(M)$ where $M \sim
+\mathrm{Exp}(\theta), \theta > 0$.  We would like to find the marginal
+distribution of $X$.  To do this, we can integrate out $M$ over the
+support thereof and so,
+
+\begin{align*}
+  \Pr{(X = x)} &= \int_0^{\infty} \Pr{(X=x,M=m)} dm \\
+  &= \int_0^{\infty} f_X(x \mid m) f_M(m) dm \\
+  &= \int_0^{\infty} \frac{m^x e^{-m}}{x!}
+    \theta e^{-\theta m} dm
+\end{align*}
+
+Using u-substitution with change of variable $u = (1+\theta)m$, we
+have:
+
+\begin{align*}
+  \Pr{(X=x)} &= \frac{\theta}{(1+\theta)^{x+1}} \int_0^{\infty} e^{-u}
+               \frac{u^x}{x!} du
+\end{align*}
+
+We recognize the Poisson PDF and know that the integral of a PDF over
+the range of the associated random variable will yield 1, so:
+
+\begin{align*}
+  \Pr{(X=x)} &= \frac{\theta}{(1+\theta)^{x+1}}
+\end{align*}
+
+Again using a change of variable $p = \frac{1}{1+\theta}$, we have,
+
+\begin{align*}
+  \Pr{(X=x)} &= (1-p)p^x
+\end{align*}
+
+We see that the marginal distribution of $X$ is, in fact, geometric with parameter $p =
+\frac{1}{1+\theta}$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Problem 7}
+
+We are given that the conditional density of $X \mid Y$ is $f(x \mid
+y) = \frac{3xx^2}{y^3}, 0<x<y$, and $Y$ is positive with some
+unspecified pdf $f_Y(y)$.  We would like to show that $X/Y$ and $Y$
+are independent.
+
+The conditional density $f(x \mid y)$ is related to the joint density
+$f_{X,Y}(x,y)$ and the marginal density $f_Y(y)$ by the definition of
+conditional probability as follows,
+
+\begin{align*}
+  f_{X,Y}(x,y) &= f(x \mid y) f_Y(y) = \frac{3x^2}{y^3} f_Y(y)
+\end{align*}
+
+Utilizing a bivariate transformation $U = \frac{X}{Y}, V = Y$ where
+$0<U<1$ and $V>0$, we then have $X = UV$ and $Y=V$ with Jacobian
+
+\begin{align*}
+  J &= \begin{bmatrix} v & u \\ 0 & 1 \end{bmatrix} = v
+\end{align*}
+
+The joint density follows from the above,
+
+\begin{align*}
+  f_{U,V} (u,v) &= f_{X,Y}(X(u,v), Y(u,v)) \cdot \left| J \right| \\
+  &= f_{X,Y}(uv, v) \cdot v \\
+  &= v f(uv \mid v) f_Y(v) \\
+  &= v \frac{3u^2v^2}{v^3} f_Y(v) = 3u^2 f_Y(v)
+\end{align*}
+
+Thusly, we have the joint density of $U = X/Y$ and $Y$ expressed as a
+separable product,
+
+\begin{align*}
+  f_{U,Y}(u,y) = 3u^2 f_Y(y) = f_U(u) f_Y(y)
+\end{align*}
+
+By Lemma 4.2.7, we have that $U$ and $Y$ are independent.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Problem 8}
+
+\begin{enumerate}[(a)]
+  \item We would like to find $\mathrm{E}[Y]$ and $\mathrm{Var}(Y)$
+    so,
+    \begin{align*}
+      \mathrm{E}[Y] &= \mathrm{E}[\mathrm{E}[Y \mid N]] \\
+      &= \mathrm{E}[2N] \\
+      &= 2 \mathrm{E}[N] \\
+      &= 2 \theta
+    \end{align*}
+
+    Utilizing Theorem 4.4.7, we have for the variance,
+    \begin{align*}
+      \mathrm{Var}(Y) &= \mathrm{E}[\mathrm{Var}(Y \mid N)] +
+                        \mathrm{Var}(\mathrm{E}[Y \mid N]) \\
+      &= \mathrm{E}[2(2N)] + \mathrm{Var}(2N) \\
+      &= 4 \theta + 4 \theta = 8 \theta
+    \end{align*}
+  \item We would now like to show that
+    $\frac{Y-\mathrm{E}[Y]}{(\mathrm{Var}(T))^{1/2}}$ converges in
+    distribution to the standard normal as $\theta \rightarrow \infty$
+    and so we have,
+    \begin{align*}
+      M_Y(t) &= \mathrm{E}[e^{tY}] \\
+      &= \mathrm{E}[\mathrm{E}[\left( \frac{1}{1-2t} \right)^N \mid
+        N]] \\
+      &= \sum_{n=0}^{\infty} \left( \frac{1}{1-2t} \right)^n
+        \Pr{(N=n)} \\
+      &= \sum_{n=0}^{\infty} \left( \frac{1}{1-2t} \right)^n
+        \frac{e^{-\theta} \theta^{n}}{n!} \\
+      &= e^{\frac{2 \theta t}{1 - 2t}}
+    \end{align*}
+
+    We can then define a sequence $\{Y_1, Y_2, \dots, Y_n\}$ and,
+    furthermore, use the transformation $Z_i = \frac{Y_i -
+      \mathrm{E}[Y_i]}{\sqrt{\mathrm{Var}(Y)}}$.  Having derived the
+    MGF of $Y_i$ above, we then derive the MGF of $Z_i$,
+
+    \begin{align*}
+      M_{Z_i}(t) &= \mathrm{E}[e^{t \frac{Y-2 \theta}{\sqrt{4
+                   \theta}}}] \\
+      &= e^{-\sqrt{\theta}} M_Y\left( \frac{t}{2 \sqrt{\theta}} \right)
+      \\
+      &= e^{-\sqrt{\theta}} \left( e^{\frac{2 \theta
+        (t/(2\sqrt{\theta}))}{1 - 2(t/(2\sqrt{\theta}))}} \right) \\
+      &= e^{\theta  \left(e^{\frac{t}{\sqrt{\theta
+        }}}-1\right)-\sqrt{\theta } t}
+    \end{align*}
+
+    Taking the limit as $\theta \rightarrow \infty$ of this yields
+    $e^{t^2/2}$, which is the MGF of the standard normal.  This
+    concludes the proof.
+\end{enumerate}
+
+\end{document}
