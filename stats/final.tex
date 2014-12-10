@@ -266,7 +266,6 @@ independence, we can evaluate this expectation using integration/sums,
 With this general form of the MGF for $X$, we have only to
 exponentiate this expression by $n$ and so,
 
-
 \begin{align*}
   M_T(t) &= \left( \frac{12 e^{-\lambda } \left(2 e^{\lambda  e^t}
            \left(\lambda \left(e^t-1\right)-3\right)+e^{\lambda}
@@ -303,36 +302,91 @@ to take the limit as $t \rightarrow 0$,
       h(y) &\approx h(\mu) + h^{'}(\mu)(y-\mu) +
       \frac{h^{''}(\mu)(y-\mu)^2}{2} \\
       &\approx \frac{1}{\mu} - \frac{y-\mu}{\mu^2} +
-      \frac{2(y-\mu)^2}{\mu^3}
+      \frac{(y-\mu)^2}{\mu^3}
     \end{align*}
 
     As we know that $Y \sim \mathrm{Gamma}(1/2, 2)$, we have that $\mu
-    = 1/4$.  Now taking the expectation of the approximation, we have,
+    = 1, \sigma^2 = 2$.  Now taking the expectation of the approximation, we have,
     \begin{align*}
       \mathrm{E}[h(y)] &\approx \mathrm{E}\left[ \frac{1}{\mu}
       \right]- \mathrm{E} \left[ \frac{y-\mu}{\mu^2} \right] +
-      \mathrm{E} \left[ \frac{2(y-\mu)}{\mu^3} \right] \\
+      \mathrm{E} \left[ \frac{(y-\mu)^2}{\mu^3} \right] \\
       &\approx \frac{1}{\mu} - \frac{1}{\mu^2}\mathrm{E}[Y] +
-      \frac{1}{\mu} + \frac{2 \mathrm{E}[Y]}{\mu^3} - \frac{2}{\mu^2}
+      \frac{1}{\mu} + \frac{\sigma^2}{\mu^3}
       \\
-      &\approx \frac{1}{\mu} \\
-      &\approx 4
+      &\approx \frac{1}{\mu} + \frac{\sigma^2}{\mu^3} \\
+      &\approx 1 + \sigma^2 \\
+      &\approx 3
     \end{align*}
 
-    Similarly, for the variance,
+    For the variance, we have,
     \begin{align*}
-      \mathrm{Var}(h(y)) &= \mathrm{Var}(h^{'}(\mu)(y-\mu)) +
-      \mathrm{Var}\left( \frac{2 h^{''}(\mu)(y-\mu)}{2} \right) + 2
-      \mathrm{Cov}\left( h^{'}(\mu)(y-\mu), \frac{h^{''}(\mu)
-          (y-\mu)^2}{2} \right) \\
-      &= \mathrm{Var}\left( \frac{\mu-y}{\mu^2} \right) + \mathrm{Var}
-      \left( \frac{2(y-\mu)}{\mu^3} \right) + 2 \mathrm{E} \left[
-        \left( \frac{\mu-y}{\mu^2} - \mathrm{E}\left[
-            \frac{\mu-y}{\mu^2} \right] \right) \left(
-          \frac{2(y-\mu)}{\mu^3} -
-          \mathrm{E}\left[\frac{2(y-\mu)}{\mu^3}\right]\right) \right]
-      \\
-      &= 
+      \mathrm{Var}(h(y)) &= h^{'}(\mu)^2 \sigma^2 + \frac{1}{4}(h^{''}(\mu))^2 (\mathrm{Var}(y^2)-4 \mu^2 \sigma^2)
+    \end{align*}
+
+    To calculate $\mathrm{Var}(y^2)$ we can expand and use the moment
+    generating function of the gamma distribution,
+
+    \begin{align*}
+      \mathrm{Var}(Y^2) &= \mathrm{E}\left[(X^2-\mathrm{E}[X^2])^2\right] \\
+      &= \mathrm{E} \left[X^4 - 2X^2 \mathrm{E}[X^2] + \mathrm{E}[X^2]^2\right] \\
+    \end{align*}
+
+    So, we will need the second and fourth derivative of the moment
+    generating function.  As such, we have
+
+    \begin{align*}
+      M_Y(t) &= \frac{1}{\sqrt{1-2t}} \\
+      M_Y^{''}(t) &= \frac{3}{(1-2t)^{5/2}} \\
+      \mathrm{E}[X^2] &= M_Y^{''}(0) = 3 \\
+      M_Y^{''''}(t) &= \frac{105}{(1-2t)^{9/2}} \\
+      \mathrm{E}[X^4] &= M_Y^{''''}(0) &= 105 \\
+      \mathrm{Var}(Y^2) &= \mathrm{E}[X^4 - 2X^2(3) + (3)^2] \\
+      &= 105 - 18 + 9 = 96
+    \end{align*}
+
+    Now that we have all of the components, we can write
+
+    \begin{align*}
+      \mathrm{Var}(h(y)) &= 2 + \frac{1}{4}(\frac{4}{\mu^6}(96-8) \\
+      &= 2 + (96-8) = 90
+    \end{align*}
+
+  \item Begin algorithm:
+    \begin{enumerate}[(1)]
+    \item Let $X \sim f_X(x)$ as specified in part a and
+      $V \sim \mathrm{Exp}(\theta)$.  We note that $f_X(x)$ and
+      $f_V(v)$ have a common support, as is required by the
+      Accept/Reject algorithm.
+    \item Choose $M = \sup_x \frac{f_X(x)}{f_V(x)} < \infty$.  So, we
+      have
+      \begin{align*}
+        \frac{\partial}{\partial x} \left( \theta \sqrt{\frac{2}{\pi}}
+        e^{-x^2/2 + x/\theta} \right) &= \theta \sqrt{\frac{2}{\pi}}
+        e^{-x^2/2 + x/\theta} \left( \frac{1}{\theta} - x \right) \\
+        0 &= \theta \sqrt{\frac{2}{\pi}} e^{-x^2/2 + x/\theta} \left(
+            \frac{1}{\theta} - x \right) \\
+        M &= x = \frac{1}{\theta}
+      \end{align*}
+    \item Generate $U \sim \mathrm{Uniform}(0,1), V \sim
+      \mathrm{Exp}(\theta)$.
+    \item If $U < \frac{1}{M} f_X(V)/f_V(V)$ then set $X=V$ and stop.
+      Otherwise, repeat steps 3 and 4.
+    \end{enumerate}
+
+  \item Now, we would like to choose a parameter for the exponential
+    distribution that will further increase the probability of
+    stopping on a given iteration of the algorithm.  Said, another
+    way, since we stop when $U < \frac{1}{M} f_X(V)/f_V(V)$, then we
+    now want to maximize $M f_V(V)$ for its parameter $\theta$.  Thusly,
+
+    \begin{align*}
+      \frac{\partial}{\partial \theta} \left( \frac{M}{\theta}
+      e^{-x/\theta} \right) &= \frac{x e^{-x/\theta}}{\theta^3} -
+                              \frac{e^{-x/\theta}}{\theta^2} \\
+      0 &= \frac{x e^{-x/\theta}}{\theta^3}
+          -\frac{e^{-x/\theta}}{\theta^2} \\
+      \theta &= 1
     \end{align*}
 
 \end{enumerate}
