@@ -8,7 +8,9 @@
 \usepackage{parskip}
 \usepackage{tikz}
 \usepackage{mathtools}
-\usetikzlibrary{fit,positioning}
+\usepackage[procnames]{listings}
+\usepackage{color}
+\usepackage{graphicx}
 \setlength{\oddsidemargin}{0in}
 \setlength{\evensidemargin}{0in}
 \setlength{\textheight}{9in}
@@ -40,6 +42,15 @@
 \newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
 \def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
 
+\lstset{language=Python, 
+        basicstyle=\ttfamily\tiny, 
+        keywordstyle=\color{keywords},
+        commentstyle=\color{comments},
+        stringstyle=\color{red},
+        showstringspaces=false,
+        identifierstyle=\color{green},
+        procnamekeys={def,class}}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{\bf Final Exam Submission\\[2ex] 
        \rm\normalsize EN605.725 --- Fall 2014}
@@ -47,7 +58,15 @@
 \author{\bf Peter Hennings}
 
 \begin{document}
+
+\definecolor{keywords}{RGB}{255,0,90}
+\definecolor{comments}{RGB}{0,0,113}
+\definecolor{red}{RGB}{160,0,0}
+\definecolor{green}{RGB}{0,150,0}
+
 \maketitle
+
+\newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Problem 1} 
@@ -57,43 +76,33 @@ $T = R^2 \sim \mathrm{Exp}(\lambda)$ and $\Theta \sim
 \mathrm{Uniform}(0,2 \pi)$.  If we let $X = R \cos{\Theta}$ and $Y = R
 \sin{\Theta}$, we can rewrite using $R = \sqrt{T}$ and utilize the
 bivariate transformation method as follows:
-
 \begin{align*}
   X &= \sqrt{T} \cos{\Theta}, Y = \sqrt{T} \sin{\Theta} \\
   t &= x^2 + y^2, \theta = \arctan{y/x}
 \end{align*}
-
 Furthermore, we know that $T$ and $\Theta$ are independent and
 therefore their joint density is as follows:
-
 \begin{align*}
   f_{T,\Theta}(t,\theta) &= f_T(t) f_{\Theta}(\theta) = \left(
                            \frac{1}{\lambda} e^{-t/\lambda}  \right)
                            \left( \frac{1}{2 \pi} \right) = \frac{1}{2
                            \pi \lambda} e^{-t/\lambda}
 \end{align*}
-
 The Jacobian is then:
-
 \begin{align*}
   J &= \begin{bmatrix} 2x & 2y \\ \frac{-y}{x^2+y^2} &
     \frac{x}{x^2+y^2} \end{bmatrix} = 2
 \end{align*}
-
 So, we then have the joint density:
-
 \begin{align*}
   f_{X,Y}(x,y) &= f_{T,\Theta}(t,\theta) \cdot \left| J \right| \\
   &= \frac{2}{2 \pi \lambda} e^{-(x^2+y^2)/\lambda} = \frac{1}{\pi \lambda} e^{-(x^2+y^2)/\lambda}
 \end{align*}
-
 We can then separate this joint density into two products:
-
 \begin{align*}
   f_{X,Y}(x,y) &= \left( \frac{1}{\sqrt{2 \pi \frac{\lambda}{2}}} e^{-x^2/\lambda}
                  \right) \left( \frac{1}{\sqrt{2 \pi \frac{\lambda}{2}}} e^{-y^2/\lambda} \right)
 \end{align*}
-
 Using this result and by Lemma 4.2.7, $X$ and $Y$ are independent, normal
 distributions with $\mu = 0, \sigma = \lambda/2$.
 
@@ -102,13 +111,13 @@ variable $Z = Y - X$ and equivalently find $\Pr{(Z > 0)}$.  We note that
 by independence of $X$ and $Y$, we have that $Y-X$ is normally
 distributed with $\mu_z = \mu_y - \mu_x$ and variance $\sigma_z^2 =
 \mathrm{Var}(Y-X) = \sigma_y^2 + \sigma_x^2$.  Thusly,
-
 \begin{align*}
   \frac{Y-X-\mu_z}{\sigma_z} &\sim \mathrm{N}(0,1) \\
   \Pr{(Z > 0)} &= 1 - \Pr{(Z \le 0)} = 1 - \Phi \left(
                   \frac{-\mu_z}{\sigma_z} \right) = 1 - \Phi (0) = 0.5
 \end{align*}
 
+\newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Problem 2}
 
@@ -117,7 +126,6 @@ distributed with $\mu_z = \mu_y - \mu_x$ and variance $\sigma_z^2 =
     \sqrt{\frac{n}{T_1(n-T_1)}}$, we can apply Slutsky's Theorem as
     follows.  Since $\frac{T_1}{n} \rightarrow P_1$ in probability and
     $\frac{n-T_1}{n} \rightarrow 1-P_1$, we have
-
     \begin{align*}
       Y &= \sqrt{\frac{1}{\frac{T_1(n-T_1)n}{n^2}}} \rightarrow
           \sqrt{\frac{1}{nP_1(1-P_1)}}
@@ -128,24 +136,21 @@ distributed with $\mu_z = \mu_y - \mu_x$ and variance $\sigma_z^2 =
 
     Furthermore, $X \rightarrow N(0, np(1-p))$ in distribution.
     Combining via Slutsky's, we have that $XY \xrightarrow{D} N(0,1)$.
-
+\newpage
   \item Define a random variable $Z = XY$ as specified above.  We have
     shown that $Z$ converges to the standard normal in distribution so
     we can define a 95\% ($\alpha = 0.05$) confidence interval for the
     normal approximation of the binomial as
-
     \begin{align*}
       p \pm z_{1-\alpha/2} \sqrt{\frac{p(1-p)}{n}}
     \end{align*}
-
     So for, $T_1 = 35, n = 80, \alpha = 2$, we have $P_1 = 0.4375, z =
     1.96$ and so the interval $(c,d)$ assures coverage of 95\% is,
-
     \begin{align*}
       (c,d) &= P_1 \pm 1.96 \sqrt{\frac{(0.4375)*(0.5625)}{80}} =
               (0.3288, 0.5462)
     \end{align*}
-
+\newpage
   \item We can use the bivariate delta method to show that as $\theta
     = g(\mu_{T_1}, \mu_{T_2}) = \frac{P_1(1-P_2)}{P_2(1-P_1)}$ is
     continuous, the function
@@ -153,10 +158,14 @@ distributed with $\mu_z = \mu_y - \mu_x$ and variance $\sigma_z^2 =
     converges in probability to $g(P_1,P_2) = \theta$.
 \end{enumerate}
 
+\newpage
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Problem 3}
 
-We are given that the number of customers who stop by a local bank
+\begin{enumerate}[(a)]
+
+\item We are given that the number of customers who stop by a local bank
 during a working day is $N \sim \mathrm{Poisson}(\lambda)$.  Also, we
 have that the probability of a customer that enters the bank
 withdrawing from his/her savings account is $P \sim
@@ -171,22 +180,18 @@ this, we first require the marginal distribution of $X$.
 From Theorem 4.4.3 and the previously proved expected value of
 $\mathrm{Binomial}(n,p)$, $\mathrm{Poisson}(\lambda)$, and
 $\mathrm{Beta}(\alpha, \beta)$, we have
-
 \begin{align*}
   \mathrm{E}[X] &= \mathrm{E}[\mathrm{E}[X \mid N,P]] \\
   &= \mathrm{E}[NP] \\
   &= \mathrm{E}[N] \mathrm{E}[P] \\
   &= \lambda \frac{2}{5}
 \end{align*}
-
 Similarly, from Theorem 4.4.7, we have
-
 \begin{align*}
   \mathrm{Var}(X) &= \mathrm{E}[\mathrm{Var}(X \mid N,P)] +
                     \mathrm{Var}(\mathrm{E}[X \mid N,P]) \\
   &= \mathrm{Var}(NP) + \mathrm{E}[NP(1-P)]
 \end{align*}
-
 We have previously shown that the variance of the product of two
 independent random variables, $\mathrm{Var}(XY) = \mathrm{Var}(X)
 \mathrm{Var}(Y) + \mathrm{Var}(X) \mathrm{E}[Y]^2 + \mathrm{Var}(Y)
@@ -195,7 +200,6 @@ independent random variables, $\mathrm{Var}(XY) = \mathrm{Var}(X)
 Therefore, additionally noting that $\mathrm{Var}(N) = \lambda,
 \mathrm{Var}(P) = \frac{\alpha
   \beta}{(\alpha+\beta)^2(\alpha+\beta+1)} = \frac{1}{36}$,
-
 \begin{align*}
   \mathrm{Var}(X) &= \mathrm{Var}(N) \mathrm{Var}(P) +
                     \mathrm{Var}(N)\mathrm{E}[P]^2 + \mathrm{Var}(P)
@@ -204,47 +208,38 @@ Therefore, additionally noting that $\mathrm{Var}(N) = \lambda,
   &= (\lambda)\left(\frac{1}{36}\right) + \lambda \left( \frac{4}{25}
     \right) + \left( \frac{1}{36} \right) \lambda^2 + \lambda \mathrm{E}[P(1-P)]
 \end{align*}
-
 We leave $\mathrm{E}[P(1-P)]$ as it is not given from the back of the
 book and we did not explicitly derive:
-
 \begin{align*}
   \mathrm{E}[P(1-P)] &= \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)
                        \Gamma(\beta)} \int_0^1 p(1-p)
                        p^{\alpha-1}(1-p)^{\beta-1} dp \\
 \end{align*}
-
 The integrand is, in fact, the kernal of another beta and so,
-
 \begin{align*}
   \mathrm{E}[P(1-P)] &= \frac{\alpha \beta}{(\alpha + \beta)(\alpha +
                        \beta + 1)} = \frac{1}{5}
 \end{align*}
-
 Bringing the pieces together, we have
-
 \begin{align*}
   \mathrm{Var}(X) &= \frac{\lambda}{36} + \frac{4 \lambda}{25} +
                     \frac{\lambda^2}{36} + \frac{\lambda}{5} =
                     \frac{\lambda^2}{36} + \frac{349\lambda}{900}
 \end{align*}
-
-We now want to find a general form for the moment generating function
+\newpage
+\item We now want to find a general form for the moment generating function
 $M_T(t)$ for the random variable $T$, which is the sum of the sequence
 of independent random variables $X_1, X_2, \dots, X_n$.  Because of
 independence, we have $M_T(t) = \prod_{i=1}^n M_{X_i}(t)$.  Also, we
 have that each $X_i$ is identically distributed and so we further have
 that $M_T(t) = M_X(t)^n$.  We begin by using the definition of the
 moment generating function,
-
 \begin{align*}
   M_X(t) &= \mathrm{E}[e^tX] \\
   &= \mathrm{E}[\mathrm{E}[(Pe^t + (1-P))^N \mid N,P]]
 \end{align*}
-
 Because we have the joint density of $N$ and $P$ due to their
 independence, we can evaluate this expectation using integration/sums,
-
 \begin{align*}
   \mathrm{E}[\mathrm{E}[(Pe^t + (1-P))^N \mid N,P]] &=
   \sum_{n=0}^{\infty} \int_0^1 (pe^t+(1-p))^n
@@ -262,10 +257,8 @@ independence, we can evaluate this expectation using integration/sums,
           \left(e^t-1\right)+4\right)+6\right)\right)}{\lambda^4
     \left(e^t-1\right)^4}
 \end{align*}
-
 With this general form of the MGF for $X$, we have only to
 exponentiate this expression by $n$ and so,
-
 \begin{align*}
   M_T(t) &= \left( \frac{12 e^{-\lambda } \left(2 e^{\lambda  e^t}
            \left(\lambda \left(e^t-1\right)-3\right)+e^{\lambda}
@@ -273,15 +266,15 @@ exponentiate this expression by $n$ and so,
            \left(e^t-1\right)+4\right)+6\right)\right)}{\lambda^4
            \left(e^t-1\right)^4} \right)^n
 \end{align*}
-
 To utilize this in getting $\mathrm{E}[T]$, we must now take the first
 derivative with respect to $t$ and evaluate at $t=0$.  We see that
 this actually results in an indeterminate form and so we end up having
 to take the limit as $t \rightarrow 0$,
-
 \begin{align*}
   \lim_{t \rightarrow 0} M_T^{'}(t) &= \frac{2\lambda n}{5}
 \end{align*}
+
+\newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Problem 4}
@@ -297,14 +290,12 @@ to take the limit as $t \rightarrow 0$,
     Taylor series expansion.
 
     If we set $Y = X^2, h(y) = \frac{1}{Y}$, we have
-
     \begin{align*}
       h(y) &\approx h(\mu) + h^{'}(\mu)(y-\mu) +
       \frac{h^{''}(\mu)(y-\mu)^2}{2} \\
       &\approx \frac{1}{\mu} - \frac{y-\mu}{\mu^2} +
       \frac{(y-\mu)^2}{\mu^3}
     \end{align*}
-
     As we know that $Y \sim \mathrm{Gamma}(1/2, 2)$, we have that $\mu
     = 1, \sigma^2 = 2$.  Now taking the expectation of the approximation, we have,
     \begin{align*}
@@ -318,76 +309,78 @@ to take the limit as $t \rightarrow 0$,
       &\approx 1 + \sigma^2 \\
       &\approx 3
     \end{align*}
-
     For the variance, we have,
     \begin{align*}
       \mathrm{Var}(h(y)) &= h^{'}(\mu)^2 \sigma^2 + \frac{1}{4}(h^{''}(\mu))^2 (\mathrm{Var}(y^2)-4 \mu^2 \sigma^2)
     \end{align*}
-
     To calculate $\mathrm{Var}(y^2)$ we can expand and use the moment
     generating function of the gamma distribution,
-
     \begin{align*}
       \mathrm{Var}(Y^2) &= \mathrm{E}\left[(X^2-\mathrm{E}[X^2])^2\right] \\
       &= \mathrm{E} \left[X^4 - 2X^2 \mathrm{E}[X^2] + \mathrm{E}[X^2]^2\right] \\
     \end{align*}
-
     So, we will need the second and fourth derivative of the moment
     generating function.  As such, we have
-
     \begin{align*}
       M_Y(t) &= \frac{1}{\sqrt{1-2t}} \\
       M_Y^{''}(t) &= \frac{3}{(1-2t)^{5/2}} \\
       \mathrm{E}[X^2] &= M_Y^{''}(0) = 3 \\
       M_Y^{''''}(t) &= \frac{105}{(1-2t)^{9/2}} \\
-      \mathrm{E}[X^4] &= M_Y^{''''}(0) &= 105 \\
+      \mathrm{E}[X^4] &= M_Y^{''''}(0) = 105 \\
       \mathrm{Var}(Y^2) &= \mathrm{E}[X^4 - 2X^2(3) + (3)^2] \\
       &= 105 - 18 + 9 = 96
     \end{align*}
-
     Now that we have all of the components, we can write
-
     \begin{align*}
       \mathrm{Var}(h(y)) &= 2 + \frac{1}{4}(\frac{4}{\mu^6}(96-8) \\
       &= 2 + (96-8) = 90
     \end{align*}
-
+\newpage
   \item Begin algorithm:
     \begin{enumerate}[(1)]
     \item Let $X \sim f_X(x)$ as specified in part a and
       $V \sim \mathrm{Exp}(\theta)$.  We note that $f_X(x)$ and
       $f_V(v)$ have a common support, as is required by the
       Accept/Reject algorithm.
-    \item Choose $M = \sup_x \frac{f_X(x)}{f_V(x)} < \infty$.  So, we
-      have
+    \item Choose $M = \sup_x \frac{f_X(x)}{f_V(x)} < \infty$.  We not
+      that this is, as you will see below, simply a matter of
+      maximizing $-x^2/2 + x/\theta$:
       \begin{align*}
         \frac{\partial}{\partial x} \left( \theta \sqrt{\frac{2}{\pi}}
         e^{-x^2/2 + x/\theta} \right) &= \theta \sqrt{\frac{2}{\pi}}
         e^{-x^2/2 + x/\theta} \left( \frac{1}{\theta} - x \right) \\
         0 &= \theta \sqrt{\frac{2}{\pi}} e^{-x^2/2 + x/\theta} \left(
             \frac{1}{\theta} - x \right) \\
-        M &= x = \frac{1}{\theta}
+        x &= \frac{1}{\theta} \\
+        M &= \theta \sqrt{\frac{2}{\pi}} e^{-(1/\theta)^2/2 +
+            (1/\theta)/\theta} \\
+        &= \theta \sqrt{\frac{2}{\pi}} e^{-1/2\theta^2 +
+            1/\theta^2} = \theta \sqrt{\frac{2}{\pi}} e^{\frac{1}{2\theta^2}}
       \end{align*}
     \item Generate $U \sim \mathrm{Uniform}(0,1), V \sim
       \mathrm{Exp}(\theta)$.
     \item If $U < \frac{1}{M} f_X(V)/f_V(V)$ then set $X=V$ and stop.
       Otherwise, repeat steps 3 and 4.
     \end{enumerate}
-
   \item Now, we would like to choose a parameter for the exponential
     distribution that will further increase the probability of
     stopping on a given iteration of the algorithm.  Said, another
     way, since we stop when $U < \frac{1}{M} f_X(V)/f_V(V)$, then we
-    now want to maximize $M f_V(V)$ for its parameter $\theta$.  Thusly,
-
+    now want to minimize $M$ for its parameter $\theta$.  Thusly,
     \begin{align*}
-      \frac{\partial}{\partial \theta} \left( \frac{M}{\theta}
-      e^{-x/\theta} \right) &= \frac{x e^{-x/\theta}}{\theta^3} -
-                              \frac{e^{-x/\theta}}{\theta^2} \\
-      0 &= \frac{x e^{-x/\theta}}{\theta^3}
-          -\frac{e^{-x/\theta}}{\theta^2} \\
+      \frac{\partial}{\partial \theta} \left( \theta
+      \sqrt{\frac{2}{\pi}} e^{\frac{1}{\theta^2}}\right) &= \sqrt{\frac{2}{\pi}}
+                                                           e^{\frac{1}{2\theta^2}}
+                                                           \left(
+                                                           \frac{1}{\theta^2}
+                                                           \right) \\
+      0 &= \sqrt{\frac{2}{\pi}} e^{\frac{1}{2\theta^2}} \left(
+          \frac{1}{\theta^2} \right) \\
       \theta &= 1
     \end{align*}
+\newpage
+  \item See attached printout of code and simulation results
+\newpage
 
   \item TO-DO
 
@@ -403,13 +396,11 @@ to take the limit as $t \rightarrow 0$,
       \frac{f(x)}{g(x)} g(x) dx \approx \frac{1}{m} \sum_{i=1}^m
       h(Y_i) \frac{f(Y_i)}{g(Y_i)}
     \end{align*}
-
   \item As we have proven the above, we additionally know that the
     sample average converges in probability to the population average
     no matter what the distribution.  This being the case, we also
     know that any sample average of a function $h(X)$ will also
     converge in probability to its expected value.
-
   \item 
     \begin{align*}
       &\sum_{i=1}^m \frac{\frac{f(Y_1)}{g(Y_i)}}{\sum_{j=1}^m
@@ -421,8 +412,18 @@ to take the limit as $t \rightarrow 0$,
       &= h(\bar{X}) \\
       &\approx \mathrm{E}[h(X)]
     \end{align*}
+\newpage
+\item We would like to add an editorial to the results of our
+  simulation for this problem.  Specifically, we note that the target
+  distribution being simulated is that of the Inverse Gamma
+  distribution.  For this distribution, in order for the mean to
+  exist, we must parameterize the Gamma being inverted as $\alpha > 1$
+  so as to allow the existence of the first moment.  In this case, we
+  have $\alpha < 1$ and therefore we observe divergence in the
+  simulation results from that of our approximations calculated using
+  the Delta method in Problem 4.
 
-  \item TO-DO
+  See attached printout of code and simulation results.
 
 \end{enumerate}
 
@@ -433,37 +434,31 @@ We have $X \mid M \sim \mathrm{Poisson}(M)$ where $M \sim
 \mathrm{Exp}(\theta), \theta > 0$.  We would like to find the marginal
 distribution of $X$.  To do this, we can integrate out $M$ over the
 support thereof and so,
-
 \begin{align*}
   \Pr{(X = x)} &= \int_0^{\infty} \Pr{(X=x,M=m)} dm \\
   &= \int_0^{\infty} f_X(x \mid m) f_M(m) dm \\
   &= \int_0^{\infty} \frac{m^x e^{-m}}{x!}
     \theta e^{-\theta m} dm
 \end{align*}
-
 Using u-substitution with change of variable $u = (1+\theta)m$, we
 have:
-
 \begin{align*}
   \Pr{(X=x)} &= \frac{\theta}{(1+\theta)^{x+1}} \int_0^{\infty} e^{-u}
                \frac{u^x}{x!} du
 \end{align*}
-
 We recognize the Poisson PDF and know that the integral of a PDF over
 the range of the associated random variable will yield 1, so:
-
 \begin{align*}
   \Pr{(X=x)} &= \frac{\theta}{(1+\theta)^{x+1}}
 \end{align*}
-
 Again using a change of variable $p = \frac{1}{1+\theta}$, we have,
-
 \begin{align*}
   \Pr{(X=x)} &= (1-p)p^x
 \end{align*}
-
 We see that the marginal distribution of $X$ is, in fact, geometric with parameter $p =
 \frac{1}{1+\theta}$.
+
+\newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Problem 7}
@@ -476,34 +471,26 @@ are independent.
 The conditional density $f(x \mid y)$ is related to the joint density
 $f_{X,Y}(x,y)$ and the marginal density $f_Y(y)$ by the definition of
 conditional probability as follows,
-
 \begin{align*}
   f_{X,Y}(x,y) &= f(x \mid y) f_Y(y) = \frac{3x^2}{y^3} f_Y(y)
 \end{align*}
-
 Utilizing a bivariate transformation $U = \frac{X}{Y}, V = Y$ where
 $0<U<1$ and $V>0$, we then have $X = UV$ and $Y=V$ with Jacobian
-
 \begin{align*}
   J &= \begin{bmatrix} v & u \\ 0 & 1 \end{bmatrix} = v
 \end{align*}
-
 The joint density follows from the above,
-
 \begin{align*}
   f_{U,V} (u,v) &= f_{X,Y}(X(u,v), Y(u,v)) \cdot \left| J \right| \\
   &= f_{X,Y}(uv, v) \cdot v \\
   &= v f(uv \mid v) f_Y(v) \\
   &= v \frac{3u^2v^2}{v^3} f_Y(v) = 3u^2 f_Y(v)
 \end{align*}
-
 Thusly, we have the joint density of $U = X/Y$ and $Y$ expressed as a
 separable product,
-
 \begin{align*}
   f_{U,Y}(u,y) = 3u^2 f_Y(y) = f_U(u) f_Y(y)
 \end{align*}
-
 By Lemma 4.2.7, we have that $U$ and $Y$ are independent.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -526,6 +513,9 @@ By Lemma 4.2.7, we have that $U$ and $Y$ are independent.
       &= \mathrm{E}[2(2N)] + \mathrm{Var}(2N) \\
       &= 4 \theta + 4 \theta = 8 \theta
     \end{align*}
+
+\newpage
+
   \item We would now like to show that
     $\frac{Y-\mathrm{E}[Y]}{(\mathrm{Var}(T))^{1/2}}$ converges in
     distribution to the standard normal as $\theta \rightarrow \infty$
@@ -561,5 +551,17 @@ By Lemma 4.2.7, we have that $U$ and $Y$ are independent.
     $e^{t^2/2}$, which is the MGF of the standard normal.  This
     concludes the proof.
 \end{enumerate}
+
+\newpage
+
+\section*{Appendix}
+
+\subsection*{Simulation Code}
+
+\lstinputlisting[language=python]{../../user/python/ceg/user/hennip/sim_725_final.py}
+
+\subsection*{Simulation Results}
+
+\includegraphics{./sim_results.jpg}
 
 \end{document}
