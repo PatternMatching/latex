@@ -330,8 +330,8 @@ Similarly, for the variance:
 \begin{ex}
   The hypergeometric distribution has application in acceptance sampling, as this example will illustrate.  Suppose a retailer buys goods in lots and each item can be either acceptable or defective.  Let
   \begin{center}
-    $N = $ # of items in a lot, \\
-    $M = $ # of defectives in a lot
+    $N = $ \# of items in a lot, \\
+    $M = $ \# of defectives in a lot
   \end{center}
 
 Then we can calculate the probability that a sample of size $K$ contains $x$ defectives.  To be specific, suppose that a lot of 25 machine parts is delivered, where a part is considered acceptable only if it passes tolerance.  We sample 10 parts and find that none are defective (all are within tolerance).  What is the probability of this event if there are 6 defectives in the lor of 25?  Applying the hypergeometric distribution with $N=25, M=6, K=10$, we have
@@ -355,6 +355,113 @@ The binomial distribution, one of the more useful discrete distributions, is bas
   \end{cases}
 \end{align*}
 
+Mean and variance:
+
+\begin{align*}
+  \mathrm{E} \left[ X \right] &= 1p + 0(1-p) = p \\
+  \mathrm{Var} X &= (1-p)^2 p + (0-p)^2(1-p) = p(1-p)
+\end{align*}
+
+If $n$ Bernoulli trials are performed, define the events
+
+\begin{align*}
+  A_i &= \{ X=1 \text{ on the ith trial }\}, i=1,2,\dots,n
+\end{align*}
+
+We assume the events are a collection of independent events (as is the case in coin tossing).  We can then derive the distribution of the total number of successes in $n$ trials.  Define a random variable $Y$ by
+
+\begin{align*}
+  Y = \text{ total number of successes in n trials}
+\end{align*}
+
+The event $\{Y = y\}$ will occur only if, out of the events $A_1, \dots, A_n$, exactly $y$ of them occur, and necessarily $n-y$ of them do not occur.  One particular outcome (one particular ordering of occurrences and nonoccurences) of the $n$ Bernoulli trials might be $A_1 \cap A_2 \cap A_3^{\complement} \cap \dots \cap A_{n-1} \cap A_n^{\complement}$.  This has probability of occurrence
+
+\begin{align*}
+  \Pr{A_1 \cap A_2 \cap A_3^{\complement} \cap \dots \cap A_{n-1} \cap A_n^{\complement}} &= pp(1-p) \dots p(1-p) \\
+  &= p^y(1-p)^{n-y}
+\end{align*}
+
+where we have used the independence of the $A_i$'s in this calculation.  Notice that the calculation is not dependent on which set of $y$ $A_i$'s occurs, only that some set of $y$ occurs.  Furthermore, the event $\{Y=y\}$ will occur no matter which set of $y$ $A_i$'s occurs.  Putting this all together, we see that a particular sequence of $n$ trials with exactly $y$ successes has probability $p^y(1-p)^{n-y}$ of occurring.  Since there are ${n \choose y}$ such sequences (the number of orderings of $y$ 1's and $n-y$ 0's), we have:
+
+\begin{align*}
+  \Pr{Y=y \, | \, n, p} &= {n \choose y} p^y(1-p)^{n-y}
+\end{align*}
+
+and $Y$ is called a \textit{binomial}(n,p) random variable.
+
+\begin{thm}
+  (Binomial Theorem) For any real numbers $x$ and $y$ and integer $n \ge 0$,
+  \begin{align*}
+    (x+y)^n &= \sum_{i=0}^n {n \choose i} x^i y^{n-i}
+  \end{align*}
+\end{thm}
+
+\begin{ex} (Dice probabilities)
+  Suppose we are interested in finding the probability of obtaining at least one 6 in four rolls of a fair die.  This experiment can be modeled as a sequence of four Bernoulli trials with success probability $p = 1/6$.  Define the random variable $X$ by
+
+  \begin{center}
+    $X = $ total number of 6's in four rolls
+  \end{center}
+
+  Then $X \sim $ binomial$(4,\frac{1}{6})$ and
+
+  \begin{align*}
+    \Pr{\text{at least one 6}} &= \Pr{X > 0} = 1 - \Pr{X = 0} \\
+    &= 1 - {4 \choose 0} \left( \frac{1}{6} \right)^0 \left( \frac{5}{6} \right) \\
+    &= 1 - \left( \frac{5}{6} \right)^4 \\
+    &= 0.518
+  \end{align*}
+
+  Consider another game; throw a pair of dice 24 times and ask for the probability of at least one double 6.
+
+  \begin{align*}
+    p &= \Pr{\text{roll a double 6}} = \frac{1}{36}
+  \end{align*}
+
+  So, if $Y =$ number of double 6's in 24 rolls, $Y \sim$ binomial$(24, \frac{1}{36})$ and
+
+  \begin{align*}
+    \Pr{\text{at least one double 6}} &= \Pr{Y > 0} \\
+    &= 1 - \Pr{Y = 0} \\
+    &= 1 - {24 \choose 0} \left( \frac{1}{36} \right)^0 \left( \frac{35}{36} \right)^{24} \\
+    &= 1 - \left( \frac{35}{36} \right)^24 \\
+    &= 0.491
+  \end{align*}
+\end{ex}
+
+\textit{Poisson Distribution}
+
+The Poisson distribution is a widely applied discrete distribution and can serve as a model for a number of different types of experiments.  For example, if we are modeling a phenomenon in which we are waiting for an occurrence (such as waiting for a bus, waiting for customers to arrive at a bank), the number of occurrences in a given time interval can sometimes be modeled by the Poisson distribution.  One of the basic assumptions on which the Poisson distribution is built is that, for small time intervals, the probability of an arrival is proportional to the length of the waiting time.  In other words, the longer we wait, the more likely it is that a customer will enter a bank.
+
+Another area of application is in spatial distributions, where, for example, the Poisson may be used to model the distribution of bomb hits in an area or the distribution of fish in a lake.
+
+The Poisson has a single parameter $\lambda$, sometimes called the intensity parameter.  A random variable $X$, taking values in the nonnegative integers, has a Poisson$(\lambda)$ distribution if
+
+\begin{align*}
+  \Pr{(X = x \, | \, \lambda)} &= \frac{e^{-\lambda} \lambda^x}{x!}, x = 0, 1, \dots
+\end{align*}
+
+To see that $\sum_{x=0}^{\infty} \Pr{(X = x \, | \, \lambda)} = 1$, recall the Taylor series expansion of $e^y$,
+
+\begin{align*}
+  e^y &= \sum_{i=0}^{\infty} \frac{y^i}{i!}
+\end{align*}
+
+Thus,
+
+\begin{align*}
+  \sum_{x=0}^{\infty} \Pr{(X = x \, | \, \lambda)} &= e^{\lambda} \sum_{x=0}^{\infty} \frac{\lambda^x}{x!} = e^{-\lambda} e^{\lambda} = 1
+\end{align*}
+
+The mean and variance of a Poisson can both be shown to be equal to the parameter, $\lambda$:
+
+\begin{align*}
+  \mathrm{E} \left[ X \right] &= \sum_{x=0}^{\infty} x \frac{e^{-\lambda} \lambda^x}{x!} \\
+  &= \sum_{x=1}^{\infty} x \frac{e^{-\lambda} \lambda^x}{x!} \\
+  &= \lambda e^{-\lambda} \sum_{x=1}^{\infty} x \frac{\lambda^{x-1}}{(x-1)!} \\
+  &= \lambda e^{-\lambda} \sum_{y=0}^{\infty} y \frac{\lambda^y}{y!} \\
+  &= \lambda e^{-\lambda} e^{\lambda} = \lambda
+\end{align*}
 
 \chapter{Multiple Random Variables}
 
