@@ -1,27 +1,18 @@
 \documentclass[11pt,a4paper]{report}
 \usepackage{amsmath,amsfonts,amssymb,amsthm,epsfig,epstopdf,titling,url,array}
-\usepackage{enumerate}
-\usepackage{parskip}
+\usepackage{enumerate} \usepackage{parskip}
 
-\makeatletter
-\def\thm@space@setup{%
-  \thm@preskip=\parskip \thm@postskip=0pt
-}
-\makeatother
+\makeatletter \def\thm@space@setup{% \thm@preskip=\parskip
+\thm@postskip=0pt } \makeatother
 
-\title{\bf Notes\\[2ex] 
-       \rm\normalsize EN605.725 --- Fall 2014}
-\date{\today}
-\author{\bf Peter Hennings}
+\title{\bf Notes\\[2ex] \rm\normalsize EN605.725 --- Fall 2014}
+\date{\today} \author{\bf Peter Hennings}
 
-\theoremstyle{definition}
-\newtheorem{defn}{Definition}[section]
+\theoremstyle{definition} \newtheorem{defn}{Definition}[section]
 
-\theoremstyle{theorem}
-\newtheorem{thm}{Theorem}[section]
+\theoremstyle{theorem} \newtheorem{thm}{Theorem}[section]
 
-\theoremstyle{example}
-\newtheorem{ex}{Example}[section]
+\theoremstyle{example} \newtheorem{ex}{Example}[section]
 
 \begin{document}
 \maketitle
@@ -38,9 +29,8 @@ population of objects having conducted an experiment.  The first step
 in this process is identifying the possible outcomes of said
 experiment.
 
-\begin{defn}
-  The set, $S$, of all possible outcomes of a particular experiment is
-  called the \textit{sample space} for the experiment.
+\begin{defn} The set, $S$, of all possible outcomes of a particular
+experiment is called the \textit{sample space} for the experiment.
 \end{defn}
 
 We can classify sample spaces into two types: countable or
@@ -48,9 +38,8 @@ uncountable.  If the elements of a sample space can be put into a 1-1
 correspondence with a subset of the integers, then the sample space is
 countable.  Otherwise, it is uncountable.
 
-\begin{defn}
-  An \textit{event} is any collection of possible outcomes of an
-  experiment, that is, any subset of $S$ (including $S$ itself).
+\begin{defn} An \textit{event} is any collection of possible outcomes
+of an experiment, that is, any subset of $S$ (including $S$ itself).
 \end{defn}
 
 Let $A$ be an event, a subset of $S$.  We say that the event $A$
@@ -61,60 +50,57 @@ rather than a set.  But we may use the terms interchangeably.
 We define formally the following two relationships, which allow us to
 order and equate sets:
 
-\begin{align*}
-    & A \subset B \Leftrightarrow x \in A \Rightarrow x \in B & \textrm{(containment)} \\
-    & A = B \Leftrightarrow A \subset B \textrm{ and } B \subset A & \textrm{(equality)}
+\begin{align*} & A \subset B \Leftrightarrow x \in A \Rightarrow x \in
+B & \textrm{(containment)} \\ & A = B \Leftrightarrow A \subset B
+\textrm{ and } B \subset A & \textrm{(equality)}
 \end{align*}
 
 Given any two events (sets) $A$ and $B$, we have the following
 elementary set operations:
 
-\textbf{Union}: The union of $A$ and $B$, written $A \cup B$, is the set of elements that belong to either $A$ or $B$ or both:
+\textbf{Union}: The union of $A$ and $B$, written $A \cup B$, is the
+set of elements that belong to either $A$ or $B$ or both:
 
-\begin{align*}
-    & A \cup B = \{x:x \in A \textrm{ or } x \in B\}
+\begin{align*} & A \cup B = \{x:x \in A \textrm{ or } x \in B\}
 \end{align*}
 
-\textbf{Intersection}: The intersection of $A$ and $B$, written $A \cap B$, is the set of elements that belong to both $A$ and $B$:
+\textbf{Intersection}: The intersection of $A$ and $B$, written $A
+\cap B$, is the set of elements that belong to both $A$ and $B$:
 
-\begin{align*}
-    & A \cap B = \{x:x \in A \textrm{ and } x \in B\}
+\begin{align*} & A \cap B = \{x:x \in A \textrm{ and } x \in B\}
 \end{align*}
 
-\textbf{Complementation}: The complement of $A$, written $A^{\complement}$, is the set of all elements that are not in A:
+\textbf{Complementation}: The complement of $A$, written
+$A^{\complement}$, is the set of all elements that are not in A:
 
-\begin{align*}
-    & A^{\complement} = \{x:x \notin A\}
+\begin{align*} & A^{\complement} = \{x:x \notin A\}
 \end{align*}
 
-\begin{thm}
-For any three events, A, B, and C, defined on a sample space S,
-\begin{align*}
-    & A \cup B = B \cup A & \textrm{(commutativity)} \\
-    & A \cap B = B \cap A \\
-    & A \cup (B \cup C) = (A \cup B) \cup C & \textrm{(associativity)} \\
-    & A \cap (B \cap C) = (A \cap B) \cap C \\
-    & A \cap (B \cup C) = (A \cap B) \cup (A \cap C) & \textrm{(distributive laws)} \\
-    & A \cup (B \cap C) = (A \cup B) \cap (A \cup C) \\
-    & (A \cup B)^{\complement} = A^{\complement} \cap B^{\complement} & \textrm{(DeMorgan's Laws)} \\
-    & (A \cap B)^{\complement} = A^{\complement} \cup B^{\complement}
+\begin{thm} For any three events, A, B, and C, defined on a sample
+space S,
+\begin{align*} & A \cup B = B \cup A & \textrm{(commutativity)} \\ & A
+\cap B = B \cap A \\ & A \cup (B \cup C) = (A \cup B) \cup C &
+\textrm{(associativity)} \\ & A \cap (B \cap C) = (A \cap B) \cap C \\
+& A \cap (B \cup C) = (A \cap B) \cup (A \cap C) &
+\textrm{(distributive laws)} \\ & A \cup (B \cap C) = (A \cup B) \cap
+(A \cup C) \\ & (A \cup B)^{\complement} = A^{\complement} \cap
+B^{\complement} & \textrm{(DeMorgan's Laws)} \\ & (A \cap
+B)^{\complement} = A^{\complement} \cup B^{\complement}
 \end{align*}
 \end{thm}
 
-\begin{defn}
-  Two events $A$ and $B$ are disjoint (or mutually exclusive) if $A
-  \cap B = \emptyset$.  The events $A_1, A_2, \dots$ are pairwise
-  disjoint (or mutually exclusive) if $A_i \cap A_j = \emptyset$ for
-  all $i \not = j$.
+\begin{defn} Two events $A$ and $B$ are disjoint (or mutually
+exclusive) if $A \cap B = \emptyset$.  The events $A_1, A_2, \dots$
+are pairwise disjoint (or mutually exclusive) if $A_i \cap A_j =
+\emptyset$ for all $i \not = j$.
 \end{defn}
 
 Disjoint sets are sets with no points in common.  If we draw a Venn
 diagram for two disjoint sets, the sets do not overlap.
 
-\begin{defn}
-  If $A_1, A_2, \dots$ are pairwise disjoint and $\cup_{i=0}^{\infty}
-  A_i = S$, then the collection $A_1, A_2, \dots$ forms a partition of
-  $S$.
+\begin{defn} If $A_1, A_2, \dots$ are pairwise disjoint and
+$\cup_{i=0}^{\infty} A_i = S$, then the collection $A_1, A_2, \dots$
+forms a partition of $S$.
 \end{defn}
 
 Partitions are very useful, allowing us to divide the sample space
@@ -128,18 +114,17 @@ may occur each time or some outcomes may repeat.  Frequency of
 occurrence is effectively probability.  More probable outcomes occur
 more frequently.
 
-\begin{defn}
-A collection of subsets of $S$ is called a sigma algebra (or Borel
-field), denoted by $\mathcal{B}$, if it satisfies the following three
-properties:
+\begin{defn} A collection of subsets of $S$ is called a sigma algebra
+(or Borel field), denoted by $\mathcal{B}$, if it satisfies the
+following three properties:
 
 \begin{enumerate}[(a)]
   \item $\emptyset \in \mathcal{B}$ (the empty set is an element of
-    $\mathcal{B}$)
+$\mathcal{B}$)
   \item If $A \in \mathcal{B}$ then $A^{\complement} \in \mathcal{B}$
-    ($\mathcal{B}$ is closed under complementation)
+($\mathcal{B}$ is closed under complementation)
   \item If $A_1, A_2, \dots \in \mathcal{B}$, then
-    $\cup_{i=1}^{\infty} A_i \in \mathcal{B}$
+$\cup_{i=1}^{\infty} A_i \in \mathcal{B}$
 \end{enumerate}
 
 \end{defn}
@@ -159,8 +144,8 @@ open sets in a given sample space $S$.
 If $S$ is finite or countable, then these technicalities do not arise,
 for we define for a given sample space $S$,
 
-\begin{align*}
-  & \mathcal{B} = \{ \textrm{all subsets of S, including S itself} \}
+\begin{align*} & \mathcal{B} = \{ \textrm{all subsets of S, including
+S itself} \}
 \end{align*}
 
 If $S$ has $n$ elements, there are $2^n$ sets in $\mathcal{B}$.  In
@@ -168,8 +153,7 @@ general, if $S$ is uncountable, it is not an easy task to describe
 $\mathcal{B}$.  However, $\mathcal{B}$ is chosen to contain any set of
 interest.
 
-\begin{defn}
-Given a sample space $S$ and an associated sigma algebra
+\begin{defn} Given a sample space $S$ and an associated sigma algebra
 $\mathcal{B}$, a probability function is a function $P$ with domain
 $\mathcal{B}$ that satisfies:
 
@@ -179,7 +163,8 @@ $\mathcal{B}$ that satisfies:
  \item $P(S) = 1$
 
  \item If $A_1, A_2, \dots \in \mathcal{B}$ are pairwise disjoint,
-   then $P\left( \cup_{i=1}^{\infty} A_i \right) = \sum_{i=1}^{\infty} P(A_i)$.
+then $P\left( \cup_{i=1}^{\infty} A_i \right) = \sum_{i=1}^{\infty}
+P(A_i)$.
 \end{enumerate}
 
 \end{defn}
@@ -197,41 +182,35 @@ T\}$.  By a ``fair'' coin we mean a balanced coin that is equally
 likely to land on heads as it is tails ($P(\{H\}) = P(\{T\})$).  We
 note the following:
 
-\begin{align*}
-  & P(\{H\}) = P(\{T\}) \\
-  & P(\{H\}) + P(\{T\}) = 1 \\
-  & P(\{H\}) = P(\{T\}) = 0.5
+\begin{align*} & P(\{H\}) = P(\{T\}) \\ & P(\{H\}) + P(\{T\}) = 1 \\ &
+P(\{H\}) = P(\{T\}) = 0.5
 \end{align*}
 
-\begin{thm}
-  Let $S = \{s_1, \dots, s_n\}$ be a finite set.  Let $\mathcal{B}$ be
-  any sigma algebra of subsets of $S$.  Let $p_1, \dots, p_n$ be
-  nonnegative numbers that sum to 1.  For any $A \in \mathcal{B}$,
-  define $P(A)$ by:
+\begin{thm} Let $S = \{s_1, \dots, s_n\}$ be a finite set.  Let
+$\mathcal{B}$ be any sigma algebra of subsets of $S$.  Let $p_1,
+\dots, p_n$ be nonnegative numbers that sum to 1.  For any $A \in
+\mathcal{B}$, define $P(A)$ by:
 
-  \begin{align*}
-    & P(A) = \sum_{\{i:s_i \in A\}} p_i
+  \begin{align*} & P(A) = \sum_{\{i:s_i \in A\}} p_i
   \end{align*}
 
 \end{thm}
 
-\begin{proof}
-We will give the proof for finite $S$.  For any $A \in \mathcal{B}$,
-$P(A) = \sum_{\{i:s_i \in A\}} p_i \ge 0$, because every $p_i \ge 0$.
-Thus, Axiom 1 is true.  Now,
+\begin{proof} We will give the proof for finite $S$.  For any $A \in
+\mathcal{B}$, $P(A) = \sum_{\{i:s_i \in A\}} p_i \ge 0$, because every
+$p_i \ge 0$.  Thus, Axiom 1 is true.  Now,
 
-\begin{align*}
-  & P(S) = \sum_{\{i:s_i \in A\}} p_i = \sum_{i=1}^n p_i = 1
+\begin{align*} & P(S) = \sum_{\{i:s_i \in A\}} p_i = \sum_{i=1}^n p_i
+= 1
 \end{align*}
 
 Thus, Axiom 2 is true.  Let $A_1, \dots, A_k$ denote pairwise disjoint
 events.  ($\mathcal{B}$ contains only a finite number of sets, so we
 need consider only finite disjoint unions).  Then,
 
-\begin{align*}
-  & P \left( \bigcup_{i=1}^k A_i \right) = \sum_{\{j:s_j \in
-    \cup_{i=1}^k A_i \}} p_j = \sum_{i=1}^k \sum_{\{j:s_j \in
-    \cup_{i=1}^k A_i \}} p_j = \sum_{i=1}^k P(A_i)
+\begin{align*} & P \left( \bigcup_{i=1}^k A_i \right) = \sum_{\{j:s_j
+\in \cup_{i=1}^k A_i \}} p_j = \sum_{i=1}^k \sum_{\{j:s_j \in
+\cup_{i=1}^k A_i \}} p_j = \sum_{i=1}^k P(A_i)
 \end{align*}
 
 The first and third equalities are true by the definition of $P(A)$.
@@ -243,9 +222,8 @@ equality.  Thus Axiom 3 is true and Kolmogorov's Axioms are satisfied.
 
 \subsection{The Calculus of Probabilities}
 
-\begin{thm}
-If $P$ is a probability function and $A$ is any set in $\mathcal{B}$,
-then
+\begin{thm} If $P$ is a probability function and $A$ is any set in
+$\mathcal{B}$, then
 
 \begin{enumerate}[(a)]
 
@@ -265,93 +243,124 @@ then
 
 \section{Discrete Distributions}
 
-A random variable $X$ is said to have a discrete distribution if the range of $X$, the sample space, is countable.  In most of these situations, the random variable has integer-valued outcomes.
+A random variable $X$ is said to have a discrete distribution if the
+range of $X$, the sample space, is countable.  In most of these
+situations, the random variable has integer-valued outcomes.
 
 \textit{Discrete Uniform Distribution}
 
 A random variable $X$ has a discrete uniform $(1,N)$ distribution if
 
-\begin{align*}
-  P(X = x \, | \, N) &= \frac{1}{N}, & x = 1, 2, \dots, N
+\begin{align*} P(X = x \, | \, N) &= \frac{1}{N}, & x = 1, 2, \dots, N
 \end{align*}
 
-where $N$ is a specified integer.  This distribution puts equal mass on each of the outcomes $1,2,\dots,N$.
+where $N$ is a specified integer.  This distribution puts equal mass
+on each of the outcomes $1,2,\dots,N$.
 
-When we deal with parametric distributions, as is mostly the case, the distribution is dependent on values of the parameters.  In order to emphasize this fact and to keep track of params, we write them in the pmf preceded by a ``$|$'' (given).
+When we deal with parametric distributions, as is mostly the case, the
+distribution is dependent on values of the parameters.  In order to
+emphasize this fact and to keep track of params, we write them in the
+pmf preceded by a ``$|$'' (given).
 
-To calculate the mean and variance of $X$, recall the identities (provable by induction)
+To calculate the mean and variance of $X$, recall the identities
+(provable by induction)
 
-\begin{align*}
-  \sum_{i=1}^k &= \frac{k(k+1)}{2} \text{ and } \\
-  \sum_{i=1}^k i^2 &= \frac{k(k+1)(2k+1)}{6}
+\begin{align*} \sum_{i=1}^k &= \frac{k(k+1)}{2} \text{ and } \\
+\sum_{i=1}^k i^2 &= \frac{k(k+1)(2k+1)}{6}
 \end{align*}
 
 We then have
 
-\begin{align*}
-  \mathrm{E} \left[ X \right] &= \sum_{i=1}^N x P(X = x \, | \, N) = \sum_{i=1}^N x \frac{1}{N} = \frac{N+1}{2} \\
-  \mathrm{E} \left[ X^2 \right] &= \sum_{i=1}^N x^2 \frac{1}{N} = \frac{(N+1)(2N+1)}{6} \\
-  \mathrm{Var}(X) &= \mathrm{E} \left[ X^2 \right] - \left( \mathrm{E} \left[ X \right] \right)^2 \\
-  &= \frac{(N+1)(2N+1)}{6} - \left( \frac{N+1}{2} \right)^2 \\
-  &= \frac{(N+1)(N-1)}{12}
+\begin{align*} \mathrm{E} \left[ X \right] &= \sum_{i=1}^N x P(X = x
+\, | \, N) = \sum_{i=1}^N x \frac{1}{N} = \frac{N+1}{2} \\ \mathrm{E}
+\left[ X^2 \right] &= \sum_{i=1}^N x^2 \frac{1}{N} =
+\frac{(N+1)(2N+1)}{6} \\ \mathrm{Var}(X) &= \mathrm{E} \left[ X^2
+\right] - \left( \mathrm{E} \left[ X \right] \right)^2 \\ &=
+\frac{(N+1)(2N+1)}{6} - \left( \frac{N+1}{2} \right)^2 \\ &=
+\frac{(N+1)(N-1)}{12}
 \end{align*}
 
 \textit{Hypergeometric Distribution}
 
-The hypergeometric distribution has many applications in finite population sampling and is best understood through the classic example of the urn model.
+The hypergeometric distribution has many applications in finite
+population sampling and is best understood through the classic example
+of the urn model.
 
-Suppose we have a large urn filled with $N$ balls that are identical in every way except that $M$ are red and $N-M$ are green.  We reach in, blindfolded, and select $K$ balls at random (the $K$ balls are taken all at once, a case of sampling without replacement).  What is the probability that exactly $x$ are red?
+Suppose we have a large urn filled with $N$ balls that are identical
+in every way except that $M$ are red and $N-M$ are green.  We reach
+in, blindfolded, and select $K$ balls at random (the $K$ balls are
+taken all at once, a case of sampling without replacement).  What is
+the probability that exactly $x$ are red?
 
-The total number of samples of size $K$ that can be drawn from the $N$ balls is ${N \choose K}$.  It is required that $x$ of the balls be red, and this can be accomplished in ${M \choose x}$ ways, leaving ${N-M \choose K-x}$ ways of filling out the sample with $K-x$ green balls.  Thus, if we let $X$ denote the number of red balls in a sample of size $K$, then $X$ has a hypergeometric distribution given by:
+The total number of samples of size $K$ that can be drawn from the $N$
+balls is ${N \choose K}$.  It is required that $x$ of the balls be
+red, and this can be accomplished in ${M \choose x}$ ways, leaving
+${N-M \choose K-x}$ ways of filling out the sample with $K-x$ green
+balls.  Thus, if we let $X$ denote the number of red balls in a sample
+of size $K$, then $X$ has a hypergeometric distribution given by:
 
-\begin{align*}
-  P(X = x \, | \, N, M, K) &= \frac{{M \choose K} {N-M \choose K-x}}{{N \choose K}}
+\begin{align*} P(X = x \, | \, N, M, K) &= \frac{{M \choose K} {N-M
+\choose K-x}}{{N \choose K}}
 \end{align*}
 
 The mean is given by
 
-\begin{align*}
-  \mathrm{E} \left[ X \right] &= \sum_{i=0}^K x \frac{{M \choose x} {N-M \choose K-x}}{{N \choose K}} = \sum_{i=1}^K x \frac{{M \choose x} {N-M \choose K-x}}{{N \choose K}}
+\begin{align*} \mathrm{E} \left[ X \right] &= \sum_{i=0}^K x \frac{{M
+\choose x} {N-M \choose K-x}}{{N \choose K}} = \sum_{i=1}^K x \frac{{M
+\choose x} {N-M \choose K-x}}{{N \choose K}}
 \end{align*}
 
-Rewriting as a summation from zero and using the combinatoric identities from Chapter 2, we simplifyto obtain:
+Rewriting as a summation from zero and using the combinatoric
+identities from Chapter 2, we simplifyto obtain:
 
-\begin{align*}
-  \mathrm{E} \left[ X \right] &= \sum_{x=1}^K \frac{M {M-1 \choose x-1}{N-m \choose K-x}}{\frac{N}{K}{N-1 \choose K-1}} = \frac{KM}{N} \sum_{i=1}^K \frac{{M-1 \choose x-1}{N-M \choose K-x}}{{N-1 \choose K-1}} \\
-  &= \frac{KM}{N}
+\begin{align*} \mathrm{E} \left[ X \right] &= \sum_{x=1}^K \frac{M
+{M-1 \choose x-1}{N-m \choose K-x}}{\frac{N}{K}{N-1 \choose K-1}} =
+\frac{KM}{N} \sum_{i=1}^K \frac{{M-1 \choose x-1}{N-M \choose
+K-x}}{{N-1 \choose K-1}} \\ &= \frac{KM}{N}
 \end{align*}
 
 Similarly, for the variance:
 
-\begin{align*}
-  \mathrm{Var} X &= \frac{KM}{N} \left( \frac{(N-M)(N-K)}{N(N-1)} \right)
+\begin{align*} \mathrm{Var} X &= \frac{KM}{N} \left(
+\frac{(N-M)(N-K)}{N(N-1)} \right)
 \end{align*}
 
-\begin{ex}
-  The hypergeometric distribution has application in acceptance sampling, as this example will illustrate.  Suppose a retailer buys goods in lots and each item can be either acceptable or defective.  Let
-  \begin{center}
-    $N = $ # of items in a lot, \\
-    $M = $ # of defectives in a lot
+\begin{ex} The hypergeometric distribution has application in
+acceptance sampling, as this example will illustrate.  Suppose a
+retailer buys goods in lots and each item can be either acceptable or
+defective.  Let
+  \begin{center} $N = $ # of items in a lot, \\ $M = $ # of defectives
+in a lot
   \end{center}
 
-Then we can calculate the probability that a sample of size $K$ contains $x$ defectives.  To be specific, suppose that a lot of 25 machine parts is delivered, where a part is considered acceptable only if it passes tolerance.  We sample 10 parts and find that none are defective (all are within tolerance).  What is the probability of this event if there are 6 defectives in the lor of 25?  Applying the hypergeometric distribution with $N=25, M=6, K=10$, we have
+Then we can calculate the probability that a sample of size $K$
+contains $x$ defectives.  To be specific, suppose that a lot of 25
+machine parts is delivered, where a part is considered acceptable only
+if it passes tolerance.  We sample 10 parts and find that none are
+defective (all are within tolerance).  What is the probability of this
+event if there are 6 defectives in the lor of 25?  Applying the
+hypergeometric distribution with $N=25, M=6, K=10$, we have
 
-\begin{align*}
-  P(X=0) &= \frac{{6 \choose 0}{19 \choose 10}}{{25 \choose 10}} = 0.028
+\begin{align*} P(X=0) &= \frac{{6 \choose 0}{19 \choose 10}}{{25
+\choose 10}} = 0.028
 \end{align*}
 
-showing that our observed event is quite unlikely if there are 6 (or more!) defectives in the lot.
+showing that our observed event is quite unlikely if there are 6 (or
+more!) defectives in the lot.
 \end{ex}
 
 \textit{Binomial Distribution}
 
-The binomial distribution, one of the more useful discrete distributions, is based on the idea of a Bernoulli trial.  A Bernoulli trial (named for James Bernoulli, one of the founding fathers of probability theory) is an experiment with two, and only two, possible outcomes.  A random variable $X$ has a \textit{Bernoulli}$(p)$ distribution if
+The binomial distribution, one of the more useful discrete
+distributions, is based on the idea of a Bernoulli trial.  A Bernoulli
+trial (named for James Bernoulli, one of the founding fathers of
+probability theory) is an experiment with two, and only two, possible
+outcomes.  A random variable $X$ has a \textit{Bernoulli}$(p)$
+distribution if
 
-\begin{align*}
-  X &= 
-  \begin{cases} 
-    1 & \text{with probability } p \\
-    0 & \text{with probability } 1-p
+\begin{align*} X &=
+  \begin{cases} 1 & \text{with probability } p \\ 0 & \text{with
+probability } 1-p
   \end{cases}
 \end{align*}
 
@@ -360,130 +369,184 @@ The binomial distribution, one of the more useful discrete distributions, is bas
 
 \section{Joint and Marginal Distributions}
 
-All models covered so far have been univariate and involve only one random variable.  Models in this chapter will be multivariate and involve more than one random variable.
+All models covered so far have been univariate and involve only one
+random variable.  Models in this chapter will be multivariate and
+involve more than one random variable.
 
-\begin{defn}
-An n-dimensional random vector is a function from a sample space $S$ into $\mathcal{R}^n$, n-dimensional Euclidean space.  
+\begin{defn} An n-dimensional random vector is a function from a
+sample space $S$ into $\mathcal{R}^n$, n-dimensional Euclidean space.
 \end{defn}
 
-\begin{defn}
-Let $(X,Y)$ be a discrete bivariate random vector.  Then the function $f(x,y)$ from $\mathcal{R}^2$ into $\mathcal{R}$ defined by $f(x,y) = P(X = x, Y = y)$ is called the joint probability mass function or joint pmf of $(X,Y)$.
+\begin{defn} Let $(X,Y)$ be a discrete bivariate random vector.  Then
+the function $f(x,y)$ from $\mathcal{R}^2$ into $\mathcal{R}$ defined
+by $f(x,y) = P(X = x, Y = y)$ is called the joint probability mass
+function or joint pmf of $(X,Y)$.
 \end{defn}
 
-Continuing with our bivariate random vector $(X,Y)$, if we let $A$ be any subset of $\mathcal{R}^2$ then:
+Continuing with our bivariate random vector $(X,Y)$, if we let $A$ be
+any subset of $\mathcal{R}^2$ then:
 
-\begin{align*}
-  P((X,Y) \in A) &= \sum_{(x,y) \in A} f(x,y)
+\begin{align*} P((X,Y) \in A) &= \sum_{(x,y) \in A} f(x,y)
 \end{align*}
 
-Since $(X,Y)$ is discrete, $f(x,y)$ is nonzero for at most a countable  number of points.  Thus, the sum is a countable sum even if $A$ is an uncountable set.
+Since $(X,Y)$ is discrete, $f(x,y)$ is nonzero for at most a countable
+number of points.  Thus, the sum is a countable sum even if $A$ is an
+uncountable set.
 
-\begin{defn}
-  A function $f(x,y)$ from $\mathcal{R}^2$ into $\mathcal{R}$ is called a joint probability density function or joint pdf of the continuous bivariate random vector $(X,Y)$ if, for every $A \in \mathcal{R}^2$:
+\begin{defn} A function $f(x,y)$ from $\mathcal{R}^2$ into
+$\mathcal{R}$ is called a joint probability density function or joint
+pdf of the continuous bivariate random vector $(X,Y)$ if, for every $A
+\in \mathcal{R}^2$:
 
-  \begin{align*}
-    P((X,Y) \in A) = \int_A \int f(x,y) dx dy
+  \begin{align*} P((X,Y) \in A) = \int_A \int f(x,y) dx dy
   \end{align*}
 \end{defn}
 
 \section{Conditional Distributions and Independence}
 
-Often times, when we observe the value of two or more random variables, the values observed are related.  For example, a person's height and weight are obviously dependent.  Conditional probabilities regarding one variable given knowledge of another variable can be computed using the join distribution of $(X,Y)$.
+Often times, when we observe the value of two or more random
+variables, the values observed are related.  For example, a person's
+height and weight are obviously dependent.  Conditional probabilities
+regarding one variable given knowledge of another variable can be
+computed using the join distribution of $(X,Y)$.
 
-\begin{defn}
-  Let $(X,Y)$ be a discrete bivariate random vector with joint pmf $f(x,y)$ and marginal pmfs $f_X(x)$ and $f_Y(y)$.  For any $x$ such that $P(X = x) = f_X(x) > 0$, the conditional pmf of $Y$ given that $X = x$ is the function of $y$ denoted by $f(y|x)$ and defined by:
+\begin{defn} Let $(X,Y)$ be a discrete bivariate random vector with
+joint pmf $f(x,y)$ and marginal pmfs $f_X(x)$ and $f_Y(y)$.  For any
+$x$ such that $P(X = x) = f_X(x) > 0$, the conditional pmf of $Y$
+given that $X = x$ is the function of $y$ denoted by $f(y|x)$ and
+defined by:
 
-  \begin{align*}
-    f(y|x) &= P(Y = y \, | \, X = x) = \frac{f(x,y)}{f_X(x)}
+  \begin{align*} f(y|x) &= P(Y = y \, | \, X = x) =
+                          \frac{f(x,y)}{f_X(x)}
   \end{align*}
 
-For any $y$ such that $P(Y = y) = f_Y(y) > 0$, the conditional pmf of $X$ given that $Y = y$ is the function of $x$ denoted by $f(x|y)$ and defined by:
+For any $y$ such that $P(Y = y) = f_Y(y) > 0$, the conditional pmf of
+$X$ given that $Y = y$ is the function of $x$ denoted by $f(x|y)$ and
+defined by:
 
-\begin{align*}
-  f(x|y) &= P(X = x \, | \, Y = y) = \frac{f(x,y)}{f_Y(y)}
+\begin{align*} f(x|y) &= P(X = x \, | \, Y = y) =
+\frac{f(x,y)}{f_Y(y)}
 \end{align*}
 
 \end{defn}
 
-\begin{defn}
-Let $(X,Y)$ be a continuous bivariate random vector with joint pdf $f(x,y)$ and marginal pdfs $f_X(x)$ and $f_Y(y)$.  For any $x$ such that $f_X(x) > 0$, the conditional pdf of $Y$ given that $X = x$ is the function of $y$ denoted by $f(y|x)$ and defined by:
+\begin{defn} Let $(X,Y)$ be a continuous bivariate random vector with
+joint pdf $f(x,y)$ and marginal pdfs $f_X(x)$ and $f_Y(y)$.  For any
+$x$ such that $f_X(x) > 0$, the conditional pdf of $Y$ given that $X =
+x$ is the function of $y$ denoted by $f(y|x)$ and defined by:
 
-\begin{align*}
-  f(y|x) &= \frac{f(x,y)}{f_X(x)}
+\begin{align*} f(y|x) &= \frac{f(x,y)}{f_X(x)}
 \end{align*}
 
 \end{defn}
 
-The conditional pmf's can also be used to calculate expected values.  IF $g(Y)$ is a function of $Y$, then the conditional expected value of $g(Y)$ given that $X = x$ is denoted $\mathrm{E}\left[g(Y) \, | \, x \right]$ and is given by:
+The conditional pmf's can also be used to calculate expected values.
+IF $g(Y)$ is a function of $Y$, then the conditional expected value of
+$g(Y)$ given that $X = x$ is denoted $\mathrm{E}\left[g(Y) \, | \, x
+\right]$ and is given by:
 
-\begin{align*}
-  \mathrm{E}\left[g(Y) \, | \, x \right] &= \sum_y g(y) f(y|x) \\
-  \mathrm{E}\left[g(Y) \, | \, x \right] &- \int_y g(y) f(y|x) dy
+\begin{align*} \mathrm{E}\left[g(Y) \, | \, x \right] &= \sum_y g(y)
+f(y|x) \\ \mathrm{E}\left[g(Y) \, | \, x \right] &- \int_y g(y) f(y|x)
+dy
 \end{align*}
 
-The variance of the probability distribution described by $f(y|x)$ is called the conditional variance of $Y$ given $X = x$.  Using the notation $Var(Y \, | \, x)$ for this, we have, using the oridinary definition of variance,
+The variance of the probability distribution described by $f(y|x)$ is
+called the conditional variance of $Y$ given $X = x$.  Using the
+notation $Var(Y \, | \, x)$ for this, we have, using the oridinary
+definition of variance,
 
-\begin{align*}
-  \mathrm{Var}(Y \, | \, x) &= \mathrm{E}(Y^2 \, | \, x) - (\mathrm{E}(Y \, | \, x))^2
+\begin{align*} \mathrm{Var}(Y \, | \, x) &= \mathrm{E}(Y^2 \, | \, x)
+- (\mathrm{E}(Y \, | \, x))^2
 \end{align*}
 
-\begin{defn}
-  Let $(X, Y)$ be a bivariate random vector with joint pdf or pmf $f(x,y)$ and marginal pdfs or pmfs $f_X(x)$ and $f_Y(y)$.  Then $X$ and $Y$ are called independent random variables if, for every $x \in \mathcal{R}$ and $y \in \mathcal{R}$,
+\begin{defn} Let $(X, Y)$ be a bivariate random vector with joint pdf
+or pmf $f(x,y)$ and marginal pdfs or pmfs $f_X(x)$ and $f_Y(y)$.  Then
+$X$ and $Y$ are called independent random variables if, for every $x
+\in \mathcal{R}$ and $y \in \mathcal{R}$,
 
-  \begin{align*}
-    f(x,y) &= f_X(x) f_Y(y)
+  \begin{align*} f(x,y) &= f_X(x) f_Y(y)
   \end{align*}
 
-  If $X$ and $Y$ are independent, the conditional pdf of $Y$ given $X = x$ is:
+  If $X$ and $Y$ are independent, the conditional pdf of $Y$ given $X
+= x$ is:
 
-  \begin{align*}
-    f(y|x) &= \frac{f(x,y)}{f_X(x)} \\
-    &= \frac{f_X(x) f_Y(y)}{f_X(x)} \\
-    &= f_Y(y)
+  \begin{align*} f(y|x) &= \frac{f(x,y)}{f_X(x)} \\ &= \frac{f_X(x)
+f_Y(y)}{f_X(x)} \\ &= f_Y(y)
   \end{align*}
 
   regardless of the value of $x$.
 \end{defn}
 
-\begin{thm}
-  Let $(X,Y)$ be a bivariate random vector with joint pdf or pmf $f(x,y)$.  Then $X$ and $Y$ are independent random variables if and only if there exists $g(x)$ and $h(y)$ such that, for every $x \in \mathcal{R}$ and $y \in \mathcal{R}$:
+\begin{thm} Let $(X,Y)$ be a bivariate random vector with joint pdf or
+pmf $f(x,y)$.  Then $X$ and $Y$ are independent random variables if
+and only if there exists $g(x)$ and $h(y)$ such that, for every $x \in
+\mathcal{R}$ and $y \in \mathcal{R}$:
 \end{thm}
 
 \chapter{Properties of a Random Sample}
 
 \section{Basic Concepts of Random Samples}
 
-\begin{defn}
-  The random variables $X_1, \dots, X_n$ are called a random sample of size $n$ from population $f(x)$ if $X_1, \dots, X_n$ are mutually independent random variables and the marginal pdf or pmf of each $X_i$ is the same function $f(x)$.  They are also known as being IID.
+\begin{defn} The random variables $X_1, \dots, X_n$ are called a
+random sample of size $n$ from population $f(x)$ if $X_1, \dots, X_n$
+are mutually independent random variables and the marginal pdf or pmf
+of each $X_i$ is the same function $f(x)$.  They are also known as
+being IID.
 \end{defn}
 
-Each observation $X_i$ is on the same variable and each $X_i$ has a marginal probability distribution given by $f(x)$.  The value of one observation has no effect on or relationship with any of the other observations; that is, $X_1, \dots, X_n$ are mututally independent.  The joint pdf or pmf of $X_1, \dots, X_n$ is given by:
+Each observation $X_i$ is on the same variable and each $X_i$ has a
+marginal probability distribution given by $f(x)$.  The value of one
+observation has no effect on or relationship with any of the other
+observations; that is, $X_1, \dots, X_n$ are mututally independent.
+The joint pdf or pmf of $X_1, \dots, X_n$ is given by:
 
-\begin{align*}
-  f(x_1, \dots, x_n) = f(x_1)f(x_2) \dots f(x_n) = \prod_{i=1}^n f(x_i)
+\begin{align*} f(x_1, \dots, x_n) = f(x_1)f(x_2) \dots f(x_n) =
+\prod_{i=1}^n f(x_i)
 \end{align*}
 
-If the population pdf or pmf is a member of a parameter family, the joint pdf or pmf is then denoted:
+If the population pdf or pmf is a member of a parameter family, the
+joint pdf or pmf is then denoted:
 
-\begin{align*}
-  f(x_1, \dots, x_n \, | \, \theta) = \prod_{i=1}^n f(x_i \, | \, \theta)
+\begin{align*} f(x_1, \dots, x_n \, | \, \theta) = \prod_{i=1}^n f(x_i
+\, | \, \theta)
 \end{align*}
 
-where the same parameter value $\theta$ is used in each of the terms in the product.  If we assume that the population follows a specified parametetric family of distribution but the true parameter value is unknown, then we note $\theta$ as being unknown.  By considering different possible values of $\theta$, we can study how a random sample would behave for different populations (e.g. maximum likelihood parameter estimation).
+where the same parameter value $\theta$ is used in each of the terms
+in the product.  If we assume that the population follows a specified
+parametetric family of distribution but the true parameter value is
+unknown, then we note $\theta$ as being unknown.  By considering
+different possible values of $\theta$, we can study how a random
+sample would behave for different populations (e.g. maximum likelihood
+parameter estimation).
 
-\begin{ex}
-  Let $X_1, \dots, X_n$ be a random sample from an exponential ($\beta$) population.  Specifically, $X_1, \dots, X_n$ might correspond to the tiems until failure (measured in years) for $n$ identical circuit boards that are put on test and used until they fail.  The joint pdf of the sample is
+\begin{ex} Let $X_1, \dots, X_n$ be a random sample from an
+exponential ($\beta$) population.  Specifically, $X_1, \dots, X_n$
+might correspond to the tiems until failure (measured in years) for
+$n$ identical circuit boards that are put on test and used until they
+fail.  The joint pdf of the sample is
 
-  \begin{align*}
-    f(x_1, \dots, x_n \, | \, \beta) &= \prod_{i=1}^n f(x_i \, | \, \beta) = \prod_{i=1}^n \frac{1}{\beta} e^{-x_i / \beta} = \frac{1}{\beta^n}e^{-(x_1 + \dots + x_n)/\beta}
+  \begin{align*} f(x_1, \dots, x_n \, | \, \beta) &= \prod_{i=1}^n
+f(x_i \, | \, \beta) = \prod_{i=1}^n \frac{1}{\beta} e^{-x_i / \beta}
+= \frac{1}{\beta^n}e^{-(x_1 + \dots + x_n)/\beta}
   \end{align*}
 
-  We can then answer questions about the sample.  For example, what is the probability that all the boards last more than 2 years?  We can compute:
+  We can then answer questions about the sample.  For example, what is
+the probability that all the boards last more than 2 years?  We can
+compute:
 
-  \begin{align*}
-    P(X_1 > 2, \dots, X_n > 2) &\\
-    &= \int_2^{\infty} \dots 
+  \begin{align*} P(X_1 > 2, \dots, X_n > 2) &\\ &= \int_2^{\infty}
+\dots
   \end{align*}
 \end{ex}
+
+\chapter{Principles of Data Reduction}
+
+We focus here on the task of making inferences about an unknown
+parameter $\theta$.  The statistician uses the information in a sample
+$X_1, \dots, X_n$ to do so.  If the sample is large enough, then it
+may be unwieldy to interpret.  Said experimenter may want to summarize
+the information contained within the sample by determining a few key
+features of the data.  This is done by computing \textit{statistics},
+or functions of the sample data.
 
 \end{document}
