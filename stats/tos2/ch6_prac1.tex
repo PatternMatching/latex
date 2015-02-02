@@ -1,0 +1,101 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{MnSymbol}
+\usepackage{algorithm,algpseudocode}
+\usepackage{parskip}
+\usepackage{tikz}
+\usetikzlibrary{fit,positioning}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\textheight}{9in}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{-0.5in}
+\setlength\parindent{0pt}
+
+% Sample macros -- how you define new commands
+% My own set of frequently-used macros have grown to many hundreds of lines.
+% Here are some simple samples.
+
+\newcommand{\Adv}{{\mathbf{Adv}}}       
+\newcommand{\prp}{{\mathrm{prp}}}                  % How to define new commands 
+\newcommand{\calK}{{\cal K}}
+\newcommand{\outputs}{{\Rightarrow}}                
+\newcommand{\getsr}{{\:\stackrel{{\scriptscriptstyle\hspace{0.2em}\$}}{\leftarrow}\:}}
+\newcommand{\andthen}{{\::\;\;}}    % \, \: \; for thinspace, medspace, thickspace
+\newcommand{\Rand}[1]{{\mathrm{Rand}[{#1}]}}       % A command with one argument
+\newcommand{\Perm}[1]{{\mathrm{Perm}[{#1}]}}       
+\newcommand{\Randd}[2]{{\mathrm{Rand}[{#1},{#2}]}} % and with two arguments
+\newcommand{\E}[1]{{\mathrm{E}\left[{#1}\right]}}
+\newcommand{\Cov}[2]{{\mathrm{Cov}[{#1},{#2}]}}
+\newcommand{\Var}[1]{{\mathrm{Var}[{#1}]}}
+\newcommand{\tab}[1]{\hspace{.2\textwidth}\rlap{#1}}
+\newcommand{\itab}[1]{\hspace{0em}\rlap{#1}}
+
+\newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{\bf Practice Set 1 Solutions\\[2ex] 
+       \rm\normalsize EN605.726 --- Spring 2015}
+\date{\today}
+\author{\bf Peter Hennings}
+
+\begin{document}
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Problem 1.1} 
+
+Let $X_i (i = 1,2,\dots,n)$ be a random sample from a distribution with the pdf:
+
+\begin{align*}
+  f(x \mid \theta) &= \theta x^{\theta-1}, \theta > 0, 0 < x < 1
+\end{align*}
+
+We would like to verify that the distribution of $X$ is a member of the single parameter exponential family.  Also, we will find the pdf of $Y = -\ln{X}$, utilizing the transformation method, and identify the distribution of $\sum_i Y_i$ through the moment generating function of $Y$.
+
+To show that the above pdf is that of a single-parameter exponential, it must have the following form:
+
+\begin{align*}
+  f(x \mid \theta) &= h(x)c(\theta) \exp{\left(  w(\theta) t(x) \right)}
+\end{align*}
+
+We can rewrite the above pdf as follows:
+\begin{align*}
+  f(x \mid \theta) &= \theta \exp{(\ln{(x)}(\theta-1))}
+\end{align*}
+
+Therefore, we have verified that $X$ is, in fact, a member of the single parameter exponential family.  Utilizing the transformation method, we proceed to calculate the pdf of $Y$ as specified.  Specifically, we have that $g(x) = -\ln{x}$ and $g^{-1}(y) = e^{-y}$.  From Theorem 2.1.5, we have that insofar as $g(x)$ is a monotone function and $f_X$ is continuous:
+
+\begin{align*}
+  f_Y(y) &= 
+           \begin{cases}
+             f_X(g^{-1}(y)) \left| \frac{d}{dy} g^{-1}(y) \right| & y \in \mathcal{Y} \\
+             0 & \text{otherwise}
+           \end{cases} \\
+  &= 
+    \begin{cases}
+      \theta (e^{-y})^{(\theta-1)} \left| -e^{-y} \right| & y \in \mathcal{Y} \\
+      0 & \text{otherwise}
+    \end{cases} \\
+  &= 
+    \begin{cases}
+      \theta e^{-\theta y} & y \in \mathcal{Y} \\
+      0 & \text{otherwise}
+    \end{cases}
+\end{align*}
+
+We see that the resultant pdf is of an exponential distribution with parameter $\theta$.  The moment generating function of $Y$ is then $M(t) = \frac{1}{1-t/\theta}$.  If we let $Z = \sum_i Y_i$ and assume the $Y$'s are independent, then we have:
+
+\begin{align*}
+  M_Z(t) &= \prod_i M_{Y_i} = \left( \frac{1}{1-t/\theta} \right)^n
+\end{align*}
+
+We observe that this is the moment generating function of a $\Gamma(n, \theta)$ distribution.
+
+
+
+\end{document}
