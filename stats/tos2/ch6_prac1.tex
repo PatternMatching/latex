@@ -55,9 +55,14 @@ Let $X_i (i = 1,2,\dots,n)$ be a random sample from a distribution with the pdf:
   f(x \mid \theta) &= \theta x^{\theta-1}, \theta > 0, 0 < x < 1
 \end{align*}
 
-We would like to verify that the distribution of $X$ is a member of the single parameter exponential family.  Also, we will find the pdf of $Y = -\ln{X}$, utilizing the transformation method, and identify the distribution of $\sum_i Y_i$ through the moment generating function of $Y$.
+We would like to verify that the distribution of $X$ is a member of
+the single parameter exponential family.  Also, we will find the pdf
+of $Y = -\ln{X}$, utilizing the transformation method, and identify
+the distribution of $\sum_i Y_i$ through the moment generating
+function of $Y$.
 
-To show that the above pdf is that of a single-parameter exponential, it must have the following form:
+To show that the above pdf is that of a single-parameter exponential,
+it must have the following form:
 
 \begin{align*}
   f(x \mid \theta) &= h(x)c(\theta) \exp{\left(  w(\theta) t(x) \right)}
@@ -68,7 +73,12 @@ We can rewrite the above pdf as follows:
   f(x \mid \theta) &= \theta \exp{(\ln{(x)}(\theta-1))}
 \end{align*}
 
-Therefore, we have verified that $X$ is, in fact, a member of the single parameter exponential family.  Utilizing the transformation method, we proceed to calculate the pdf of $Y$ as specified.  Specifically, we have that $g(x) = -\ln{x}$ and $g^{-1}(y) = e^{-y}$.  From Theorem 2.1.5, we have that insofar as $g(x)$ is a monotone function and $f_X$ is continuous:
+Therefore, we have verified that $X$ is, in fact, a member of the
+single parameter exponential family.  Utilizing the transformation
+method, we proceed to calculate the pdf of $Y$ as specified.
+Specifically, we have that $g(x) = -\ln{x}$ and $g^{-1}(y) = e^{-y}$.
+From Theorem 2.1.5, we have that insofar as $g(x)$ is a monotone
+function and $f_X$ is continuous:
 
 \begin{align*}
   f_Y(y) &= 
@@ -88,14 +98,68 @@ Therefore, we have verified that $X$ is, in fact, a member of the single paramet
     \end{cases}
 \end{align*}
 
-We see that the resultant pdf is of an exponential distribution with parameter $\theta$.  The moment generating function of $Y$ is then $M(t) = \frac{1}{1-t/\theta}$.  If we let $Z = \sum_i Y_i$ and assume the $Y$'s are independent, then we have:
+We see that the resultant pdf is of an exponential distribution with
+parameter $\theta$.  The moment generating function of $Y$ is then
+$M(t) = \frac{1}{1-t/\theta}$.  If we let $Z = \sum_i Y_i$ and assume
+the $Y$'s are independent, then we have:
 
 \begin{align*}
   M_Z(t) &= \prod_i M_{Y_i} = \left( \frac{1}{1-t/\theta} \right)^n
 \end{align*}
 
-We observe that this is the moment generating function of a $\Gamma(n, \theta)$ distribution.
+We observe that this is the moment generating function of a
+$\Gamma(n, \theta)$ distribution.  Thusly, we have the pdf of $T$:
 
+\begin{align*}
+  f_T(t) &= \frac{\theta^n t^{n-1} e^{-\theta t}}{\Gamma(n)}
+\end{align*}
 
+If we note that $T = \sum_i^n \ln{x_i} = -\ln{\prod_i^n x_i}$ then we
+have that $\prod_i^n x_i = e^{-t}$.  Computing the ratio
+$\frac{p_X}{q_T} = \frac{\prod_i f_{X_i}}{f_T}$, we have:
+
+\begin{align*}
+  \frac{\prod_i f_{X_i}}{f_T} &= \frac{\theta^n
+                                e^{-t(\theta-1)}}{\theta^n t^{n-1}
+                                e^{-\theta t}/\Gamma(n)} \\
+  &= \frac{e}{t^{n-1}/\Gamma(n)}
+\end{align*}
+
+We see that the above does not depend on $\theta$ and therefore,
+$T(X)$ isa sufficient statistic for $\theta$.
+
+Using the relation $\prod_i^n x_i = e^{-t}$ and applying
+Fisher-Neymann factorization to $f_X$, we have:
+
+\begin{align*}
+  \prod_i^n f(x_i \mid \theta) &= \theta^n \left( \prod_i^n x_i
+                                 \right)^{\theta-1} \\
+  f_X(x \mid \theta) &= \theta^n \left( e^{-t} \right)^{\theta-1} \\
+  g(t \mid \theta) &= \theta^n \left( e^{-t} \right)^{\theta-1} \\
+  h(x) &= 1
+\end{align*}
+
+Therefore, $T(X) = \sum_i^n Y_i$ is verified as a sufficient
+statistic via factorization.
+
+To prove or disprove the assertion that $T(X) = \sum_i Y_i$ is minimal
+sufficient for $\theta$, we can use Theorem 6.2.13:
+
+\begin{align*}
+  \frac{f(x \mid \theta)}{f(y \mid \theta)} &= \frac{\theta^n
+                                              e^{-(\theta-1)\sum_i
+                                              \ln{x_i}}}{\theta^n
+                                              e^{-(\theta-1) \sum_i
+                                              \ln{y_i}}} \\
+                                            &= \frac{e^{\sum_i
+                                              \ln{x_i}}}{e^{\sum_i
+                                              \ln{y_i}}}
+\end{align*}
+
+We see that, for this particular statistic, $T(X)$ does not
+necessarily have to be equal to $T(Y)$ for the expression to not be
+dependent on $\theta$.  Therefore, it is not minimally sufficient.
+
+To verify completeness of the two statistics, we can use 
 
 \end{document}
