@@ -3,11 +3,8 @@
 \usepackage{amsthm}
 \usepackage{amssymb}
 \usepackage{enumerate}
-\usepackage{MnSymbol}
-\usepackage{algorithm,algpseudocode}
 \usepackage{parskip}
-\usepackage{tikz}
-\usetikzlibrary{fit,positioning}
+
 \setlength{\oddsidemargin}{0in}
 \setlength{\evensidemargin}{0in}
 \setlength{\textheight}{9in}
@@ -160,6 +157,14 @@ We see that, for this particular statistic, $T(X)$ does not
 necessarily have to be equal to $T(Y)$ for the expression to not be
 dependent on $\theta$.  Therefore, it is not minimally sufficient.
 
-To verify completeness of the two statistics, we can use 
+To verify completeness of the two statistics, we can use Thm 6.2.25.
+Specifically, $\sum_i \ln{X_i}$ is complete if $\theta -1$ contains an
+open set in $\mathcal{R}^1$ and $\sum_i Y_i$ is complete if $-\theta$
+contains an open set in $\mathcal{R}^1$.  As both of these are
+trivially true, we have verified the completeness of both statistics.
+
+\section*{Problem 2}
+
+
 
 \end{document}
