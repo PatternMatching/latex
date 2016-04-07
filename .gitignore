@@ -1,3 +1,5 @@
 /stats/_region_.tex
-/stats/notes.aux
-/stats/notes.pdf
+*.pdf
+*.aux
+*.jpg
+*~

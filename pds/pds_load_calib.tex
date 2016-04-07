@@ -1,0 +1,183 @@
+\documentclass[11pt, a4paper]{article}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{parskip}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\begin{document}
+
+\title{PDS Load Calibration and Simulation}
+
+\author{Peter Hennings}
+
+\maketitle
+
+\begin{abstract}
+  This document intends to outline the method by which WeatherDelta
+  calibrates and simulates load.  The basis of the simulation is, in
+  essence, a single-order autoregressive process utilizing some
+  additional parameters that are calibrated functions of time and
+  temperature.
+\end{abstract}
+
+\section{Review of Autoregressive Process}
+
+% A linear regression model can be generalized by the following
+% mathematical form:
+
+% \begin{align*}
+%   y_t = X\beta + \epsilon_t, \epsilon \sim N(0, \sigma^2 I)
+% \end{align*}
+
+% This model assumes that observations $y_t$ are independent, which is
+% not desireable.  We can introduce dependence by adding a lag term:
+
+% \begin{align*}
+%   y_t &= x_t^T \beta + \phi y_{t-1} + \epsilon_t
+% \end{align*}
+
+% In estimating $\beta$ and $\phi$ by least squares, we see that though
+% we have consistency of the parameters, standard errors are incorrect
+
+In the context of the load calibration process, we make the
+assumption, due to lack of complete understanding of the underlying
+process, that the autoregressive coefficient is fitted by means of the
+standard Yule-Walker equations.
+
+Let $\{X_t\}$ be the zero-mean causal autoregressive process.
+
+We recall the autoregressive model of order $p$, denoted as AR$(p)$,
+which is specified as:
+\begin{align*}
+  X_t &= c + \sum_{i=1}^p \varphi_i X_{t-i} + \epsilon_t
+\end{align*}
+where $\varphi_1, \dots, \varphi_p$ are coefficients or parameters to
+be fitted, $c$ is a constant, and $\epsilon_t \sim N(0,\sigma^2)$ is a
+residual term.
+
+More specifically, in our case, we have the AR$(1)$ process:
+\begin{align*}
+  X_t &= \phi_1 X_{t-1} + \epsilon_t
+\end{align*}
+The Yule-Walker equations provide the means to estimate $\phi_i$ based
+on the observations $X_1, \dots, X_n$, which is in this case the
+historical load.  Generically, we have:
+\begin{align*}
+  \gamma_m &= \sum_{i=1}^p \varphi_i \gamma_{m-i} + \sigma_{\epsilon}^2
+             \delta_{m,0}
+\end{align*}
+where $\gamma_m$ is the autocovariance function of the series,
+$\sigma_{\epsilon}^2$ is the variance of the noise process and
+$\delta_{m,0}$ is the Kronecker delta function (e.g. $\delta_{m,0} =
+1$ when $m=0$ and zero otherwise.
+
+Specifically, for AR$(1)$, we have:
+\begin{align*}
+  \gamma_1 &= \varphi_1 \gamma_0 \\
+  \varphi_1 &= \frac{\gamma_1}{\gamma_0}
+\end{align*}
+which is just the autocovariance at lag 1.
+
+\section{Specification of the Load Model}
+
+Load, which we will henceforth denote by $L_t$, is modeled in
+WeatherDelta using the following relation:
+\begin{align*}
+  L_t &= \mu_t + Y_t
+\end{align*}
+where $\mu_t(t, x)$ is a function of both the hour $t$ and $X_t$, which we
+will denote as temperature in hour $t$.  $Y_t$ is our single-order
+autoregressive process:
+\begin{align*}
+  Y_t &= \varphi_1 Y_{t-1} + \tilde{\sigma_n} \epsilon_t
+\end{align*}
+where $Y_{t-1}$ is (confusingly) the load in the previous hour, and
+$\tilde{\sigma_t}$ is shorthand for
+$\sqrt{\max{(\sigma_t^2 - \varphi_1^2 \sigma_{t-1}^2, 0)}}$,
+$\epsilon_t \sim N(0,1)$, and, quite importantly, $\sigma_t = f(t, x)$
+is some model of variance as a function of time and temperature.  
+
+We note that there is a knob, of sorts, to scale $\sigma(t,x)$, but that
+the default for this param is one and we thusly omit from our model
+specification.  There also appears to be an override to the AR
+coefficient.  It is not clear what the mechanics are to overriding
+either parameter without doing so explicitly via the database.  The
+assumption is that there could be some GUI interface.
+
+\section{Limitations of AR$(1)$}
+
+Though relatively obvious, we thought it relevant to explicitly state
+that model order selection techniques are not undertaken and
+autocorrelation existing beyond that from the previous hour are not
+considered for relevancy to prediction.
+
+Perhaps future work would be to undertake an analysis of the overall
+reduction in error that would arise from model order selection
+heuristics being applied.
+
+\section{Calibration of $\mu(t,x)$ and $\sigma(t,x)$}
+
+The ``magic'' of the above model is, without question, in the
+determination of the time and temperature parameterized mean and
+variance functions.  So, without further ado, we attempt to
+disseminate the process by which these functions are constructed.
+
+We define a few functions on time (unique hour) map a given hour into
+three-dimensional space where dimensions are:
+\begin{itemize}
+\item Hour of the day (e.g. $h: t \rightarrow \{1, \dots, 24\}$)
+\item Day of the week, where holidays are their own 'day' (e.g. $d: t
+  \rightarrow \{0, \dots, 7\}$)
+\item Week of the year, where for the day $n$ of the year we have
+  $w(n) = 365/n$ (e.g. $w: t \rightarrow [0,52)$)
+\end{itemize}
+We also define $g:x \rightarrow \{0, \dots, 39\}$ where $x$ is again
+temperature and the number of equally sized bins (40) into which we
+discretize $x$ is, as far as we can tell, completely arbitrary.
+
+Let us then imagine a cube for each hour of the day with axes
+representing temperature bin, week of the year, and day of the week.
+It's particularly helpful if we imagine that temp is along the x-axis
+and the week of the year falls on the z-axis since our single discrete
+dimension is the numeric day of the week.  
+
+We want the optimal discretized grid position
+$(d,w,g) = \sigma^*(t,x)$, which we will find as follows.  Given a day
+of the week, mapped to its numerical representation, we then have a
+point on the x-z plane and calculate which of the four discrete points
+that define the containing rectangle is closest by Euclidean distance.
+Mathematically:
+\begin{align*}
+  \argmin_{w,g} \sqrt{(w-t)^2 + (g-x)^2}
+\end{align*}
+Given this discretization, we can then formulate $\mu(t,x)$ as:
+\begin{align*}
+  \mu(t,x) &= \sum_{i,j=0} \lambda_{i,j} \sigma^*(t,x)
+\end{align*}
+The coefficient matrix $\Lambda$ is set through the WeatherDelta GUI.
+Presumeably, the premise here is that it is desireable to take the
+quantized function $\mu$ and smooth this in some fashion to avoid
+overfitting.
+
+Though outside the scope and intent of this document, it is
+interesting to consider the different approaches one could take to
+calibrating this coefficient matrix.  The techniques mentioned as part
+of the talk include local-weighted polynomial regression and
+nonparametric approaches such as Kernel Density Estimation.
+
+The assumption is that following calibration of $\mu(t,x)$, the
+historical series can be demeaned and $\sigma(t,x)$ can be calibrated
+in a similar fashion.
+
+\section{Conclusions}
+
+We examined the methods by which WeatherDelta load is calibrated and,
+implicitly, its subsequent simulation.  Future work should include
+analysis in and around the aforementioned coefficient matrix used to
+smooth these vital functions $\mu$ and $\sigma$.  Currently, a single
+set of default coefficients are utilized.  Perhaps some sensitivity to
+different load types exists for said coefficients.
+
+\end{document}
