@@ -1,4 +1,5 @@
 /stats/_region_.tex
+*.log
 *.pdf
 *.aux
 *.jpg
